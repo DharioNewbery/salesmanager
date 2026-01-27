@@ -13,6 +13,8 @@ class Vector {
     void checkBounds(int index);
 
     public:
+    T& operator[](const int index);
+    const T operator[] (const int index) const;
     Vector();
     Vector(const Vector<T> &obj);
     ~Vector();
@@ -31,6 +33,21 @@ class Vector {
 
 const int MIN_VECTOR_CAPACITY = 40;
 const int SIZE_INCREMENT = 5;
+
+template <typename T>
+T& Vector<T>::operator[](const int index)
+{
+    checkBounds(index);
+    return arr[index];
+}
+
+template <typename T>
+const T Vector<T>::operator[](const int index) const 
+{
+    checkBounds(index);
+    return arr[index];
+}
+
 // private
 template <typename T>
 Vector<T>::Vector(): size(0), capacity(MIN_VECTOR_CAPACITY)
