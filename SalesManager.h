@@ -3,6 +3,7 @@
 
 #include "Vector.h"
 #include "Sale.h"
+#include "Fileio.hpp"
 
 class SalesManager
 {
@@ -16,6 +17,8 @@ public:
     bool addSale(Sale sale);
     bool removeSaleById(const int id);
     void listSales(const int start = 0, int end = INT_MAX);
+    void loadSales();
+    void saveSales();
 };
 
 SalesManager::SalesManager(): sales(), nextId(1) {}
@@ -42,4 +45,15 @@ void SalesManager::listSales(const int start, int end) {
     
 }
 
+void SalesManager::loadSales()
+{
+    std::string saveFileName = "test_file.txt";
+    sales = loadFromFile(saveFileName);
+}
+
+void SalesManager::saveSales()
+{
+    std::string saveFileName = "test_file.txt";
+    saveToFile(saveFileName, sales);
+}
 #endif
