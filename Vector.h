@@ -15,6 +15,8 @@ class Vector {
     public:
     T& operator[](const int index);
     const T operator[] (const int index) const;
+    Vector<T>& operator=(const Vector<T>& other);
+    
     Vector();
     Vector(const Vector<T> &obj);
     ~Vector();
@@ -48,6 +50,21 @@ const T Vector<T>::operator[](const int index) const
     return arr[index];
 }
 
+template <typename T>
+Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
+    if (this != &other) { // Prevent self-assignment (v = v)
+        delete[] arr;     // Clean up our old memory first
+
+        size = other.size;
+        capacity = other.capacity;
+        arr = new T[capacity]; // Allocate new memory
+        for (int i = 0; i < size; i++) {
+            arr[i] = other.arr[i];
+        }
+    }
+    return *this;
+}
+
 // private
 template <typename T>
 Vector<T>::Vector(): size(0), capacity(MIN_VECTOR_CAPACITY)
@@ -56,14 +73,14 @@ Vector<T>::Vector(): size(0), capacity(MIN_VECTOR_CAPACITY)
 }
 
 template <typename T>
-inline Vector<T>::Vector(const Vector<T> &obj)
+inline Vector<T>::Vector(const Vector<T> &other)
 {
-    capacity = obj.capacity;
-    size = obj.size;
+    capacity = other.capacity;
+    size = other.size;
 
     arr = new T[capacity];
     for (int i = 0; i < size; i++)
-        arr[i] = obj.arr[i];
+        arr[i] = other.arr[i];
 }
 
 template <typename T>
