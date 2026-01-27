@@ -14,6 +14,7 @@ class Vector {
 
     public:
     Vector();
+    Vector(const Vector<T> &obj);
     ~Vector();
 
     T pop();
@@ -35,6 +36,17 @@ template <typename T>
 Vector<T>::Vector(): size(0), capacity(MIN_VECTOR_CAPACITY)
 {
     arr = new T[capacity];
+}
+
+template <typename T>
+inline Vector<T>::Vector(const Vector<T> &obj)
+{
+    capacity = obj.capacity;
+    size = obj.size;
+
+    arr = new T[capacity];
+    for (int i = 0; i < size; i++)
+        arr[i] = obj.arr[i];
 }
 
 template <typename T>
