@@ -21,6 +21,6 @@ SalesManager is a lightweight command-line application designed for rapid sales 
 - [ ] **Activity Log:** A dedicated log file for auditing all changes.
 
 ## 🏗️ Installation & Usage
-1. Clone the repo: `git clone https://github.com/yourusername/salesmanager.git`
+1. Clone the repo: `git clone https://github.com/DharioNewbery/salesmanager.git`
 2. Compile: `g++ main.cpp -o salesmanager`
 3. Run: `./salesmanager`
