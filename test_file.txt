@@ -1,0 +1,100 @@
+1,5000,geladeira,dhario,20/04/2025
+2,2500,celular android,Khey niwa,18/01/2026
+3,1200,monitor gamer,Alessandra Lima,05/02/2026
+4,4500,notebook dell,Marcos Viana,12/03/2026
+5,850,cadeira office,Beatriz Santos,22/03/2026
+6,3200,smart tv 55,Ricardo Oliveira,10/04/2026
+7,150,fone bluetooth,Juliana Costa,15/04/2026
+8,5500,macbook air,Tiago Ferreira,02/05/2026
+9,600,fritadeira air fryer,Carla Mendes,18/05/2026
+10,2100,lavadora de roupas,Fernando Souza,30/05/2026
+11,980,micro-ondas,Patrícia Rocha,05/06/2026
+12,3400,ar condicionado 12000 btus,Lucas Almeida,12/06/2026
+13,220,teclado mecânico,Renan Pacheco,18/06/2026
+14,1800,aspirador de pó,Wesley Nogueira,25/06/2026
+15,720,impressora multifuncional,Ana Paula Ribeiro,02/07/2026
+16,4100,iphone 14,Bruno Martins,10/07/2026
+17,1350,tablet samsung,Daniela Farias,18/07/2026
+18,2600,forno elétrico embutir,José Araujo,25/07/2026
+19,490,liquidificador industrial,Marina Lopes,01/08/2026
+20,3700,geladeira frost free,André Cunha,08/08/2026
+21,890,ventilador turbo,Paulo Henrique,15/08/2026
+22,2750,freezer horizontal,Rosana Teixeira,22/08/2026
+23,199,mouse gamer,Igor Batista,28/08/2026
+24,320,webcam full hd,Natália Pires,02/09/2026
+25,1450,soundbar lg,Cláudio Moreira,08/09/2026
+26,3800,playstation 5,Leonardo Ramos,15/09/2026
+27,2100,xbox series s,Vanessa Cunha,22/09/2026
+28,560,panela elétrica,Simone Barros,28/09/2026
+29,4300,notebook gamer acer,Fábio Gonçalves,05/10/2026
+30,980,cafeteira espresso,Helena Duarte,12/10/2026
+31,760,scanner portátil,Rafael Neves,18/10/2026
+32,5200,smart tv 65,Sérgio Macedo,25/10/2026
+33,180,repetidor wifi,Mônica Rangel,01/11/2026
+34,2500,geladeira duplex,Alexandre Tavares,08/11/2026
+35,670,aspirador robô,Priscila Azevedo,15/11/2026
+36,3100,notebook lenovo,Diego Furtado,22/11/2026
+37,140,hub usb,Carolina Meireles,28/11/2026
+38,860,forno micro-ondas inox,Roberto Silveira,05/12/2026
+39,2950,ar condicionado portátil,Lívia Monteiro,12/12/2026
+40,480,balança digital,Bianca Lemos,18/12/2026
+41,3900,iphone 13,Henrique Bastos,26/12/2026
+42,1100,monitor ultrawide,Renata Freitas,03/01/2027
+43,260,carregador portátil powerbank,Otávio Rezende,10/01/2027
+44,720,roteador mesh,Flávia Portela,18/01/2027
+45,5100,macbook pro,Maurício Peixoto,25/01/2027
+46,890,purificador de água,Silvana Guedes,01/02/2027
+47,2300,lavadora lava e seca,Adriano Lopes,08/02/2027
+48,150,cabo hdmi 4k,Luciana Prado,15/02/2027
+49,3600,notebook hp,Everton Siqueira,22/02/2027
+50,640,panela de pressão elétrica,Cristina Mello,01/03/2027
+51,1200,smartwatch samsung,Rodrigo Paiva,08/03/2027
+52,980,caixa de som jbl,Mirela Costa,15/03/2027
+53,450,tablet infantil,Jonas Albuquerque,22/03/2027
+54,2700,geladeira inverse,Débora Nunes,29/03/2027
+55,390,teclado sem fio,Pedro Amaro,05/04/2027
+56,3200,notebook asus,Vanessa Rios,12/04/2027
+57,210,balança inteligente,Guilherme Fontes,18/04/2027
+58,850,ventilador de coluna,Raquel Figueiredo,25/04/2027
+59,4700,smart tv oled,Marcelo Pinho,02/05/2027
+60,1900,home theater sony,Eliane Torres,09/05/2027
+61,310,fone com fio profissional,Douglas Lacerda,16/05/2027
+62,2600,forno elétrico de bancada,Patrícia Leal,23/05/2027
+63,540,moedor de café,Samuel Brito,30/05/2027
+64,4100,iphone 14 pro,Amanda Rezende,06/06/2027
+65,780,processador de alimentos,Renato Corrêa,13/06/2027
+66,3500,notebook vaio,Luciano Matos,20/06/2027
+67,420,webcam corporativa,Ingrid Salazar,27/06/2027
+68,890,aspirador vertical,Victor Paes,04/07/2027
+69,5200,geladeira side by side,Nelson Queiroz,11/07/2027
+70,1600,monitor 4k,Paula Henriques,18/07/2027
+71,290,leitor biométrico,Marcos Afonso,25/07/2027
+72,3800,notebook samsung,Julio Pimenta,01/08/2027
+73,610,panela wok elétrica,Denise Karam,08/08/2027
+74,2400,ar condicionado inverter,Thiago Reis,15/08/2027
+75,980,smart speaker alexa,Eduarda Pinheiro,22/08/2027
+76,150,mousepad gamer,Leandro Coelho,29/08/2027
+77,4300,pc gamer completo,Bruna Falcão,05/09/2027
+78,870,frigobar,Alexis Moura,12/09/2027
+79,260,adaptador usb-c,Luana Barcellos,19/09/2027
+80,3400,notebook positivo,Wilson Antunes,26/09/2027
+81,520,liquidificador portátil,Melissa Brandão,03/10/2027
+82,4700,smart tv qled,Renato Valente,10/10/2027
+83,890,aspirador automotivo,João Pedro Lima,17/10/2027
+84,1350,monitor curvo,Letícia Guaraná,24/10/2027
+85,2100,tablet ipad,Daniel Rangel,31/10/2027
+86,430,teclado ergonômico,Sabrina Teles,07/11/2027
+87,3100,notebook avell,Bruno Esteves,14/11/2027
+88,670,caixa térmica elétrica,Patrícia Muniz,21/11/2027
+89,180,carregador veicular,Victor Hugo Pires,28/11/2027
+90,3900,geladeira smart,Cláudia Serpa,05/12/2027
+91,260,hub hdmi,Igor Loureiro,12/12/2027
+92,720,panela air fryer oven,Nádia Coelho,19/12/2027
+93,5100,notebook apple m2,Felipe Drumond,26/12/2027
+94,980,smart lâmpada wifi,Marina Quevedo,02/01/2028
+95,2400,lavadora compacta,Oscar Beltrão,09/01/2028
+96,450,suporte articulado tv,Karen Vidal,16/01/2028
+97,3700,notebook dell inspiron,Ricardo Póvoa,23/01/2028
+98,860,secadora de roupas compacta,Isabela Furtado,30/01/2028
+99,120,adaptador bluetooth,Pablo Seixas,06/02/2028
+100,5900,smart tv 75,Adriana Coutinho,13/02/2028
