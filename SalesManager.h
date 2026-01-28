@@ -10,6 +10,7 @@ class SalesManager
 private:
     Vector<Sale> sales;
     int nextId;
+    int getLargestId();
 public:
     SalesManager();
     ~SalesManager();
@@ -21,7 +22,15 @@ public:
     void saveSales();
 };
 
-SalesManager::SalesManager(): sales(), nextId(1) {}
+int SalesManager::getLargestId()
+{
+    int biggest = 0;
+    for (int i = 0; i < sales.getSize(); i++)
+        biggest = (biggest < sales[i].id)? sales[i].id : biggest;
+    return biggest;
+}
+
+SalesManager::SalesManager() : sales(), nextId(1) {}
 SalesManager::~SalesManager() {}
 
 bool SalesManager::addSale(Sale sale) {
@@ -55,5 +64,7 @@ void SalesManager::saveSales()
 {
     std::string saveFileName = "test_file.txt";
     saveToFile(saveFileName, sales);
+
+    nextId = getLargestId() + 1;
 }
 #endif
