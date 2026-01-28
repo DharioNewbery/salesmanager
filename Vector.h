@@ -102,6 +102,7 @@ void Vector<T>::redefineCapacity()
     
     delete[] arr;
     arr = newArr;
+    capacity = newCapacity;
 }
 
 template <typename T>
