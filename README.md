@@ -26,7 +26,7 @@ SalesManager is a lightweight command-line application designed for rapid sales 
 * **Compiler:** `g++` (Standard: C++17)
 * **Build Tool:** `make`
   * *Note for Windows:* If using MinGW, ensure `mingw32-make` is accessible in your PATH.
-### 1. Standard Build
+### 1. Standard Build (Using Makefile) (Recommended)
 To compile the entire project along with all available mods, run:
 ```powershell
 make
@@ -35,4 +35,15 @@ or
 ```powershell
 mingw32-make
 ```
+### 2. Manual Build (Using g++)
+To compile the code using the g++ command, run:
+```powershell
+g++ -std=c++17 main.cpp -include modules/Core.h -o salesmanager
+```
+If your project has more multiple modules, you will need to specify the include for each extra module, or the commands will not be registered on the application.
+```powershell
+g++ -std=c++17 main.cpp -include modules/Core.h -include modules/<name>.h ...other includes... -o salesmanager
+```
+
+
 
