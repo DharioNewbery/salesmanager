@@ -40,9 +40,13 @@ To compile the code using the g++ command, run:
 ```powershell
 g++ -std=c++17 main.cpp -include modules/Core.h -o salesmanager
 ```
-If your project has more multiple modules, you will need to specify the include for each extra module, or the commands will not be registered on the application.
+If your project has multiple modules, you will need to specify the include for each extra module, otherwise those modules will not be registered by the application.
 ```powershell
 g++ -std=c++17 main.cpp -include modules/Core.h -include modules/<name>.h ...other includes... -o salesmanager
+```
+Depending on the terminal you are using, this is also possible and will include all modules automatically:
+```powershell
+g++ -std=c++17 main.cpp -include modules/*.h -o salesmanager
 ```
 
 
