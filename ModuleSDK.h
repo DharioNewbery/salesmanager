@@ -9,7 +9,7 @@
 
 class SalesManager;
 
-typedef std::function<void(SalesManager&)> CommandFunc;
+typedef std::function<void(SalesManager&, Vector<std::string>)> CommandFunc;
 
 class ModuleRegistry {
 public:
