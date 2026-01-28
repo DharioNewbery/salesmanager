@@ -1,7 +1,27 @@
 #include "../ModuleSDK.h"
 
 void listSales(SalesManager& sm, Vector<std::string> args) {
-    sm.listSales();
+    int start = 0, end = INT_MAX;
+
+    try
+    {
+        switch (args.getSize())
+        {
+        case 2:
+            start = std::stoi(args[1]);
+            break;
+        case 3:
+            start = std::stoi(args[1]);
+            end = std::stoi(args[2]);
+            break;
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
+    sm.listSales(start, end);
 }
 
 void loadSales(SalesManager& sm, Vector<std::string> args) {
@@ -46,3 +66,4 @@ void addSale(SalesManager& sm, Vector<std::string> args) {
 REGISTER_COMMAND("list", listSales)
 REGISTER_COMMAND("load", loadSales)
 REGISTER_COMMAND("save", saveSales)
+REGISTER_COMMAND("add", addSale)
