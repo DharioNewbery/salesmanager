@@ -2,11 +2,12 @@
 A high-performance, minimalist C++ sales register built from the ground up.
 
 ## 🚀 Overview
-SalesManager is a lightweight command-line application designed for rapid sales logging. Unlike typical implementations, this project features a **custom-built dynamic array (Vector)** to handle data management, demonstrating low-level memory control and template programming.
+SalesManager is a lightweight command-line application designed for rapid sales logging. Unlike typical implementations, this project features a **custom-built dynamic array (Vector)** to handle data management and **custom-build module SDK** for easy expansion.
 
 ## 🛠️ Technical Highlights
 * **Custom Templates:** Built a generic `Vector<T>` class, featuring manual memory allocation and bounds checking.
 * **CLI Architecture:** Designed a clean command-loop interface for real-time data entry.
+* **Modular Implementation:** Created a Module SDK for simple and robust functionality scalling and customization.
 
 ## 📋 Features
 ### Core Management
@@ -20,7 +21,18 @@ SalesManager is a lightweight command-line application designed for rapid sales 
 - [ ] **Sorting:** Sort records by date, price, or category.
 - [ ] **Activity Log:** A dedicated log file for auditing all changes.
 
-## 🏗️ Installation & Usage
-1. Clone the repo: `git clone https://github.com/DharioNewbery/salesmanager.git`
-2. Compile: `g++ main.cpp -o salesmanager`
-3. Run: `./salesmanager`
+## 🚀 How to Compile
+### Prerequisites
+* **Compiler:** `g++` (Standard: C++17)
+* **Build Tool:** `make`
+  * *Note for Windows:* If using MinGW, ensure `mingw32-make` is accessible in your PATH.
+### 1. Standard Build
+To compile the entire project along with all available mods, run:
+```powershell
+make
+```
+or
+```powershell
+mingw32-make
+```
+
