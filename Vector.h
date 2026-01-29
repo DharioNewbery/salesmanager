@@ -31,6 +31,8 @@ class Vector {
     void remove(int index);
     void insert(int index, T element);
     void replace(int index, T element);
+    Vector<T> map(T (*f)(T));
+    Vector<T> filter(bool (*f)(T));
 };
 
 const int MIN_VECTOR_CAPACITY = 40;
@@ -183,5 +185,30 @@ void Vector<T>::replace(int index, T element)
     checkBounds(index);
     arr[index] = element;
 }
+
+template <typename T>
+Vector<T> Vector<T>::map(T (*func)(T))
+{
+    Vector<T> result;
+
+    for (int i = 0; i < size; i++)
+        result.push(func(arr[i]));
+    
+    return result;
+}
+
+template <typename T>
+Vector<T> Vector<T>::filter(bool (*func)(T))
+{
+    Vector<T> result;
+
+    for (int i = 0; i < size; i++) {
+        if (func(arr[i]))
+            result.push(arr[i]);
+    }
+    
+    return result;
+}
+
 
 #endif
