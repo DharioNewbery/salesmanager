@@ -3,67 +3,113 @@
 void listSales(SalesManager& sm, Vector<std::string> args) {
     int start = 0, end = INT_MAX;
 
-    try
-    {
-        switch (args.getSize())
-        {
-        case 2:
-            start = std::stoi(args[1]);
-            break;
-        case 3:
-            start = std::stoi(args[1]);
-            end = std::stoi(args[2]);
-            break;
+    if (args.getSize() > 1) {
+        if (!tryParseInt(args[1], start)) {
+            std::cerr << "Error: Invalid start index '" << args[1] << "'\n";
+            return;
         }
     }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
+
+    if (args.getSize() > 2) {
+        if (!tryParseInt(args[2], end)) {
+            std::cerr << "Error: Invalid end index '" << args[2] << "'\n";
+            return;
+        }
     }
-    
+
     sm.listSales(start, end);
 }
 
 void loadSales(SalesManager& sm, Vector<std::string> args) {
-    std::cout << "loading files...\n";
-    sm.loadSales();
-    std::cout << "files loaded!\n";
+    // Basic validation: Command + Filename = 2 total tokens
+    if (args.getSize() != 2) {
+        std::cerr << "Usage: load <filename>\n";
+        return;
+    }
 
+    const std::string& filename = args[1];
+    std::cout << "Loading sales from '" << filename << "'...\n";
+    
+    if (sm.loadSales(filename)) {
+        std::cout << "Success: Data loaded!\n";
+    } else {
+        std::cerr << "Error: Could not open or parse '" << filename << "'.\n";
+    }
 }
 
 void saveSales(SalesManager& sm, Vector<std::string> args) {
-    std::cout << "saving files...\n";
-    sm.saveSales();
-    std::cout << "files saved\n";
+    if (args.getSize() < 2) {
+        std::cerr << "Usage: save <filename>\n";
+        return;
+    }
+
+    const std::string& filename = args[1];
+    std::cout << "Saving sales to '" << filename << "'...\n";
+    
+    if (sm.saveSales(filename)) {
+        std::cout << "Success: Data saved.\n";
+    } else {
+        std::cerr << "Error: Failed to write to '" << filename << "'. Check permissions.\n";
+    }
 }
+
+void clear(SalesManager& sm, Vector<std::string> args)
+{
+    #if defined _WIN32
+        system("cls");
+    #elif defined (__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
+        system("clear");
+    #elif defined (__APPLE__)
+        system("clear");
+    #endif
+}
+
 
 void addSale(SalesManager& sm, Vector<std::string> args) {
     Sale newSale;
-    std::string input;
-
-    std::cout << "comprador: ";
-    std::getline(std::cin, input);
-    newSale.buyer = input;
-
-    std::cout << "produto: ";
-    std::getline(std::cin, input);
-    newSale.item = input;
     
-    std::cout << "data (dd/MM/yyyy): ";
-    std::getline(std::cin, input);
-    newSale.date = input;
+    // MODE 1: Fast Add (e.g., add "John Doe" "Apple" "01/01/2026" 150)
+    if (args.getSize() >= 5) {
+        newSale.buyer = args[1];
+        newSale.item = args[2];
+        newSale.date = args[3];
+        if (tryParseInt(args[4], newSale.price)) {
+            std::cerr << "Error: Invalid price format '" << args[2] << "'\n";
+            return;
+        } 
+    } 
+    // MODE 2: Interactive Prompts (if they just type 'add')
+    else {
+        std::string input;
+        
+        std::cout << "Comprador: ";
+        std::getline(std::cin, newSale.buyer);
 
-    std::cout << "preço: ";
-    std::getline(std::cin, input);
-    newSale.price = std::stoi(input);
+        std::cout << "Produto: ";
+        std::getline(std::cin, newSale.item);
+        
+        std::cout << "Data (dd/MM/yyyy): ";
+        std::getline(std::cin, newSale.date);
+
+        bool isPriceValid = false;
+        while (!isPriceValid) {
+            std::cout << "Valor: ";
+            std::getline(std::cin, input);
+            if (tryParseInt(input, newSale.price)) {
+                std::cerr << "Error: Invalid price format '" << args[2] << "'\n";
+            } else isPriceValid = true;
+        }
+    }
 
     if (sm.addSale(newSale))
-        std::cout << "sale added successfully!\n";
+        std::cout << "Sale added successfully!\n";
     else
-        std::cout << "Something went wrong while trying to add new sale. Try again.\n";
+        std::cout << "Error: Manager could not store the sale.\n";
 }
 
 REGISTER_COMMAND("list", listSales)
 REGISTER_COMMAND("load", loadSales)
 REGISTER_COMMAND("save", saveSales)
 REGISTER_COMMAND("add", addSale)
+REGISTER_COMMAND("clear", clear)
+
