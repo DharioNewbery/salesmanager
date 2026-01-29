@@ -6,6 +6,7 @@
 #include <map>
 #include <iostream>
 #include "SalesManager.h"
+#include "SafeConversion.hpp"
 
 class SalesManager;
 
