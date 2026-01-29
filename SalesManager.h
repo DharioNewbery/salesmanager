@@ -58,13 +58,12 @@ void SalesManager::loadSales()
 {
     std::string saveFileName = "test_file.txt";
     sales = loadFromFile(saveFileName);
+    nextId = getLargestId() + 1;
 }
 
 void SalesManager::saveSales()
 {
     std::string saveFileName = "test_file.txt";
     saveToFile(saveFileName, sales);
-
-    nextId = getLargestId() + 1;
 }
 #endif
