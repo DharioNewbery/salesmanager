@@ -16,7 +16,6 @@ void printV(Vector<int> a) {
 int main () {
     auto& commands = ModuleRegistry::getCommands();
     SalesManager sm = SalesManager();
-    sm.loadSales();
 
     bool isRunning = true;
     Vector<string> tokens;
