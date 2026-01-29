@@ -26,6 +26,7 @@ int main () {
         getline(cin, input);
         tokens = splitInput(input);
         
+        if (tokens.getSize() == 0) continue;
         if (tokens[0] == "exit") {
             isRunning = false;
             continue;
