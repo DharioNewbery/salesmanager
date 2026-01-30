@@ -37,9 +37,9 @@ struct Sale {
     }
     
     void display() const {
-        std::cout << "ID: " << id << " | Item: " << item
-        << " | Price: $" << price << " | Buyer: "
-        << buyer << " | Date: " << date << std::endl;
+        std::cout << "ID: " << id << " | Buyer: " << buyer
+        << " | Item: " << item << " | Date: "
+        << date << " | Price: $" << price << std::endl;
     }
 };
 
