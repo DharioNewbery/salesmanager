@@ -6,15 +6,10 @@
 
 using namespace std;
 
-void printV(Vector<int> a) {
-    for(int i = 0; i < a.getSize(); i++) {
-        cout << a[i] << " ";
-    }
-    cout << endl;
-}
-
 int main () {
     auto& commands = ModuleRegistry::getCommands();
+    auto& helpMessages = ModuleRegistry::getHelpMessages();
+    
     SalesManager sm = SalesManager();
 
     bool isRunning = true;
@@ -24,12 +19,21 @@ int main () {
     while (isRunning) {
         getline(cin, input);
         tokens = splitInput(input);
+                
         
-        if (tokens.getSize() == 0) continue;
+        if (tokens.getSize() == 0)
+            continue; // Guard for empty command lines;
+        
         if (tokens[0] == "exit") {
             isRunning = false;
             continue;
         }
+
+        if (commands.count(tokens[0]) && tokens.getSize() == 2 && (tokens[1] == "--help" || tokens[1] == "--h")) {
+            std::cout << helpMessages[tokens[0]] << std::endl;
+            continue;
+        }
+
         if (commands.count(tokens[0]))
             commands[tokens[0]](sm, tokens);
         else
