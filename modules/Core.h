@@ -33,6 +33,18 @@ namespace help {
     \n\
     >> add <string buyer> <string item> <string date> <int price>\n\
     Add a new sale.\n";
+
+    const auto clear = "\
+    >> clear --help (shows this message)\n\
+    \n\
+    >> clear\n\
+    clear the terminal\n";
+    
+    const auto removeSale = "\
+    >> remove --help (shows this message)\n\
+    \n\
+    >> remove <integer id>\n\
+    remove the sale with the specified id.\n";
 }
 
 
@@ -101,6 +113,20 @@ void clear(SalesManager& sm, Vector<std::string> args)
     #endif
 }
 
+void removeSale(SalesManager& sm, Vector<std::string> args) {
+
+    int id;
+    
+    if (args.getSize() < 2 || !tryParseInt(args[1], id)) {
+        std::cerr << "Usage: remove <integer id>\n";
+        return;
+    }
+
+    if (sm.removeSaleById(id))
+        std::cout << "item removed.\n" << std::endl;
+    else
+        std::cerr << "Something went wrong while removing item with id '" << id << "'.\n" << std::endl;
+}
 
 void addSale(SalesManager& sm, Vector<std::string> args) {
     Sale newSale;
@@ -148,10 +174,12 @@ REGISTER_HELP_MESSAGE("list", help::listSales, listSales)
 REGISTER_HELP_MESSAGE("load", help::loadSales, loadSales)
 REGISTER_HELP_MESSAGE("save", help::saveSales, saveSales)
 REGISTER_HELP_MESSAGE("add", help::addSale, addSale)
+REGISTER_HELP_MESSAGE("clear", help::clear, clear)
+REGISTER_HELP_MESSAGE("remove", help::removeSale, removeSale)
 
 REGISTER_COMMAND("list", listSales)
 REGISTER_COMMAND("load", loadSales)
 REGISTER_COMMAND("save", saveSales)
 REGISTER_COMMAND("add", addSale)
 REGISTER_COMMAND("clear", clear)
-
+REGISTER_COMMAND("remove", removeSale)
