@@ -1,3 +1,0 @@
-C:/Users/dhari/salesmanager/build/CMakeFiles/salesmanager.dir
-C:/Users/dhari/salesmanager/build/CMakeFiles/edit_cache.dir
-C:/Users/dhari/salesmanager/build/CMakeFiles/rebuild_cache.dir

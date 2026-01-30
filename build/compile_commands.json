@@ -1,8 +1,0 @@
-[
-{
-  "directory": "C:/Users/dhari/salesmanager/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/salesmanager.dir/includes_CXX.rsp -g -std=gnu++17 -includeC:/Users/dhari/salesmanager/modules/Core.h -o CMakeFiles\\salesmanager.dir\\src\\main.cpp.obj -c C:\\Users\\dhari\\salesmanager\\src\\main.cpp",
-  "file": "C:/Users/dhari/salesmanager/src/main.cpp",
-  "output": "CMakeFiles/salesmanager.dir/src/main.cpp.obj"
-}
-]
