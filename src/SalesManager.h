@@ -41,7 +41,14 @@ bool SalesManager::addSale(Sale sale) {
 }
 
 bool SalesManager::removeSaleById(const int id) {
-    sales.remove(id);
+    
+    Sale mockSale = Sale();
+    mockSale.id = id;
+    int index = sales.find(mockSale);
+
+    if (index == -1) return false;
+
+    sales.remove(index);
     return true;
 }
 
