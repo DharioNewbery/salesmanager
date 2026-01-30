@@ -26,6 +26,11 @@
 *.mod
 *.smod
 
+# CMake build folder
+build/
+bin/
+out/
+
 # Compiled Static libraries
 *.lai
 *.la
