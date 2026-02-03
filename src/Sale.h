@@ -11,6 +11,10 @@ struct Sale {
     std::string buyer;
     std::string date;
 
+    bool operator==(const Sale& other) const {
+        return id == other.id;
+    }
+
     std::string toCsv() const {
         return std::to_string(id) + "," + std::to_string(price) + "," + item + "," + buyer + "," + date;    
     }
@@ -37,9 +41,9 @@ struct Sale {
     }
     
     void display() const {
-        std::cout << "ID: " << id << " | Item: " << item
-        << " | Price: $" << price << " | Buyer: "
-        << buyer << " | Date: " << date << std::endl;
+        std::cout << "ID: " << id << " | Buyer: " << buyer
+        << " | Item: " << item << " | Date: "
+        << date << " | Price: $" << price << std::endl;
     }
 };
 

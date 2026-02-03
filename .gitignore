@@ -22,9 +22,18 @@
 *.dylib
 *.dll
 
+# VS Code
+.vscode/
+.vs/
+
 # Fortran module files
 *.mod
 *.smod
+
+# CMake build folder
+build/
+bin/
+out/
 
 # Compiled Static libraries
 *.lai

@@ -18,8 +18,8 @@ public:
     bool addSale(Sale sale);
     bool removeSaleById(const int id);
     void listSales(const int start = 0, int end = INT_MAX);
-    void loadSales();
-    void saveSales();
+    bool loadSales(std::string);
+    bool saveSales(std::string);
 };
 
 int SalesManager::getLargestId()
@@ -41,7 +41,14 @@ bool SalesManager::addSale(Sale sale) {
 }
 
 bool SalesManager::removeSaleById(const int id) {
-    sales.remove(id);
+    
+    Sale mockSale = Sale();
+    mockSale.id = id;
+    int index = sales.find(mockSale);
+
+    if (index == -1) return false;
+
+    sales.remove(index);
     return true;
 }
 
@@ -54,17 +61,26 @@ void SalesManager::listSales(const int start, int end) {
     
 }
 
-void SalesManager::loadSales()
+bool SalesManager::loadSales(std::string saveFileName)
 {
-    std::string saveFileName = "test_file.txt";
-    sales = loadFromFile(saveFileName);
+    try {
+        sales = loadFromFile(saveFileName);
+        nextId = getLargestId() + 1;
+        return true;
+    }
+    catch (...) {
+        return false;
+    }
 }
 
-void SalesManager::saveSales()
+bool SalesManager::saveSales(std::string saveFileName)
 {
-    std::string saveFileName = "test_file.txt";
-    saveToFile(saveFileName, sales);
-
-    nextId = getLargestId() + 1;
+    try {
+        saveToFile(saveFileName, sales);
+        return true;
+    }
+    catch (...) {
+        return false;
+    }
 }
 #endif
