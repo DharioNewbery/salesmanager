@@ -22,6 +22,10 @@
 *.dylib
 *.dll
 
+# VS Code
+.vscode/
+.vs/
+
 # Fortran module files
 *.mod
 *.smod
