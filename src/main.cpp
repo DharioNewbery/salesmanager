@@ -2,7 +2,7 @@
 #include "Vector.h"
 #include "SalesManager.h"
 #include "ModuleSDK.h"
-#include "inputHandler.h"
+#include "InputHandler.h"
 
 using namespace std;
 
