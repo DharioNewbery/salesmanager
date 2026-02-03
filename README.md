@@ -13,7 +13,7 @@ SalesManager is a lightweight command-line application designed for rapid sales 
 ### Core Management
 * **Smart Entry:** Add individual or bulk items with automated ID generation.
 * **CRUD Operations:** Edit, delete (single/bulk), and list sales records.
-* **Data Persistence:** Robust Save/Load functionality using `.txt` parsing.
+* **Data Persistence:** Robust Save/Load functionality using `csv` parsing.
 
 ### Planned Enhancements
 - [ ] **Action History:** Undo/Redo stack for error correction.
@@ -24,17 +24,18 @@ SalesManager is a lightweight command-line application designed for rapid sales 
 ## 🚀 How to Compile
 ### Prerequisites
 * **Compiler:** `g++` (Standard: C++17)
-* **Build Tool:** `make`
-  * *Note for Windows:* If using MinGW, ensure `mingw32-make` is accessible in your PATH.
-### 1. Standard Build (Using Makefile) (Recommended)
-To compile the entire project along with all available mods, run:
+* **Build Tool:** `cmake`
+* 
+### 1. Standard Build (Using cmake) (Recommended)
+To compile the entire project along with all available moduless, go to salesmanager/ and run:
 ```powershell
-make
+mkdir build ..
 ```
-or
+then
 ```powershell
-mingw32-make
+cmake --build .
 ```
+
 ### 2. Manual Build (Using g++)
 To compile the code using the g++ command, run:
 ```powershell
@@ -48,6 +49,3 @@ Depending on the terminal you are using, this is also possible and will include 
 ```powershell
 g++ -std=c++17 main.cpp -include modules/*.h -o salesmanager
 ```
-
-
-
