@@ -2,6 +2,7 @@
 #define VECTOR_H
 
 #include <stdexcept>
+#include <climits>
 
 template <typename T>
 class Vector {
@@ -36,7 +37,7 @@ class Vector {
 };
 
 const int MIN_VECTOR_CAPACITY = 40;
-const int SIZE_INCREMENT = 5;
+const int SIZE_INCREMENT = 10;
 
 template <typename T>
 T& Vector<T>::operator[](const int index)
