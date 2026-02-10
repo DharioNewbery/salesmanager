@@ -17,6 +17,7 @@ public:
 
     bool addSale(Sale sale);
     bool removeSaleById(const int id);
+    bool updateSale(Sale sale);
     void listSales(const int start = 0, int end = INT_MAX);
     bool loadSales(std::string);
     bool saveSales(std::string);
@@ -49,6 +50,15 @@ bool SalesManager::removeSaleById(const int id) {
     if (index == -1) return false;
 
     sales.remove(index);
+    return true;
+}
+
+inline bool SalesManager::updateSale(Sale sale)
+{
+    int index = sales.find(sale); 
+    if (index == -1) return false;
+
+    sales.replace(index, sale);
     return true;
 }
 
