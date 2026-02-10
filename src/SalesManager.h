@@ -19,8 +19,8 @@ public:
     bool removeSaleById(const int id);
     bool updateSale(Sale sale);
     void listSales(const int start = 0, int end = INT_MAX);
-    bool loadSales(std::string);
-    bool saveSales(std::string);
+    bool loadSales(std::string filename, bool append = false);
+    bool saveSales(std::string filename, bool override = false);
 };
 
 int SalesManager::getLargestId()
@@ -71,26 +71,32 @@ void SalesManager::listSales(const int start, int end) {
     
 }
 
-bool SalesManager::loadSales(std::string saveFileName)
+bool SalesManager::loadSales(std::string filename, bool append = false)
 {
     try {
-        sales = loadFromFile(saveFileName);
-        nextId = getLargestId() + 1;
+        Vector<Sale> loadedData = loadFromFile(filename);
+        
+        if (append) {
+            for (int i = 0; i < loadedData.getSize(); i++) {
+                // Assign a NEW unique ID based on the CURRENT manager state
+                loadedData[i].id = nextId++; 
+                sales.push(loadedData[i]);
+            }
+        } else {
+            sales = loadedData;
+            nextId = getLargestId() + 1;
+        }
         return true;
-    }
-    catch (...) {
-        return false;
-    }
+    } catch (...) { return false; }
 }
 
-bool SalesManager::saveSales(std::string saveFileName)
+bool SalesManager::saveSales(std::string filename, bool override = false)
 {
     try {
-        saveToFile(saveFileName, sales);
+        if (override) { loadSales(filename, true); }
+        saveToFile(filename, sales);
         return true;
     }
-    catch (...) {
-        return false;
-    }
+    catch (...) { return false; }
 }
 #endif
