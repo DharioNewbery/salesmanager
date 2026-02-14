@@ -23,7 +23,7 @@ public:
     bool saveSales(std::string filename, bool override = false);
     void quickSort(int id_start, int id_end);
     int  partition(int id_start, int id_end);
-    void sortByPrice();
+    bool sortByPrice();
 };
 
  

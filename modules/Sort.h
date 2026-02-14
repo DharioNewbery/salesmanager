@@ -3,15 +3,12 @@
 
 #include "../src/ModuleSDK.h" 
 // ela vai ser chamada para ordenar as vendas por preço. ela verifica se o vetor de vendas tem 0 ou 1 elemento, e se tiver, ela n faz nada. caso contrário, ela chama o quicksort passando o índice do primeiro e do último elemento do vetor. depois, se o vetor tiver 0 elementos, ela avisa que n tem vendas para ordenar (OBS sort_by_price chama o quicksorte e o quick sort vai chamar o patition, pq o partition é o auxiliar do quicksort;)
-void SalesManager::sortByPrice() {
+bool SalesManager::sortByPrice() {
     if (sales.getSize() <= 1) {
-    std::cout << "Nada para ordenar.\n";
-    return;
+        return false;
     }
      quickSort(0, sales.getSize() - 1);
-    // ai o quicksort que é uma função que precisa do vetor de vendas eu deixei no arquivo de salemanager mesmo; 
-     // se tiver algo pra ordenar, ele chama o quicksort passando o índice do primeiro e do último elemento. ( que é o low e o high)
-
+    return true;
 }
 
 // chamada da função 
@@ -20,8 +17,12 @@ void SalesManager::sortByPrice() {
 void sortCommand(SalesManager& manager, Vector<std::string> args) {
     
     // aqui eu coloquei só a chamada da função e uma msg , que como é um output, ele tem que tá aqui e n no salesmanager né ? 
-    manager.sortByPrice();
-    std::cout << "Vendas ordenadas por preço com sucesso!\n";
+    if (manager.sortByPrice()) {
+        std::cout << "Vendas ordenadas por preço com sucesso!\n";
+    }
+    else {
+        std::cout << "Não há vendas para ordenar.\n";
+    }
 }
 
 
