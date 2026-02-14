@@ -7,9 +7,10 @@ void SalesManager::sortByPrice() {
     if (sales.getSize() <= 1) {
     std::cout << "Nada para ordenar.\n";
     return;
-}
+    }
+     quickSort(0, sales.getSize() - 1);
     // ai o quicksort que é uma função que precisa do vetor de vendas eu deixei no arquivo de salemanager mesmo; 
-    quickSort(0, sales.getSize() - 1); // se tiver algo pra ordenar, ele chama o quicksort passando o índice do primeiro e do último elemento. ( que é o low e o high)
+     // se tiver algo pra ordenar, ele chama o quicksort passando o índice do primeiro e do último elemento. ( que é o low e o high)
 
 }
 
