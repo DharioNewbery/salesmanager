@@ -21,9 +21,19 @@ public:
     void listSales(const int start = 0, int end = INT_MAX);
     bool loadSales(std::string filename, bool append = false);
     bool saveSales(std::string filename, bool override = false);
-    void quickSort(int id_start, int id_end);
-    int  partition(int id_start, int id_end);
+    void quickSort(int idStart, int idEnd);
+    int  partition(int idStart, int idEnd);
     bool sortByPrice();
+    // Aqui a função ela vai reescrever na própria variavel os valores , então n retorna nada. 
+    void getStats(
+        int& totalDeVendas, 
+        int& valorArrecadado, 
+        int& maiorVenda, 
+        int& menorVenda,
+        Vector<std::string>& produtos,
+        Vector<double>& mediaPorProduto
+    );
+  
 };
 
  
@@ -138,4 +148,74 @@ bool SalesManager::saveSales(std::string filename, bool override)
     }
     catch (...) { return false; }
 }
+
+void SalesManager::getStats(
+    int& totalDeVendas, 
+    int& valorArrecadado, 
+    int& maiorVenda, 
+    int& menorVenda,
+    Vector<std::string>& produtos,
+    Vector<double>& mediaPorProduto
+) {
+    // verifica o total de vendas efetuadas, eu pensei em usar o sales.id mas ai teria que ficar verificando o maior id, e se tiver um id faltando por conta de uma venda removida, ia dar problema. Então é mais seguro usar o getSize na classe inteira mesmo;
+    totalDeVendas = sales.getSize();
+    valorArrecadado = 0;
+    // aqui eu tive que criar a variavel de produtos e media, pq quando eu rodava o comando aparentemente ficava os valores anteriores , ai eu precisava resetar esses vetores(se não a média dava errada), mas n conseguir pensar numa forma melhor (fora rodar um vetor vazio toda vez que chamar o comando stats); 
+    produtos = Vector<std::string>();
+    mediaPorProduto = Vector<double>();
+    // aqui só verifica se tem ou n vendas, eu tava colocando output aqui , mas já tirei , pq aqui só fica a lógica interna né? 
+    if (totalDeVendas == 0) {
+        maiorVenda = 0;
+        menorVenda = 0;
+        return;
+    }
+
+    maiorVenda = sales[0].price;
+    menorVenda = sales[0].price;
+
+    // esses vetores aqui eu vou usar eles pela posição, então basicamente posições iguais = mesma informação;
+    // são vetores acumuladores; -> senão , n tem média ; 
+    Vector<int> somaPorProduto;
+    Vector<int> quantidadePorProduto;
+    // esse loop aqui é o que vai somar o meu valor total;
+    for (int i = 0; i < totalDeVendas; i++) {
+
+        int precoAtual = sales[i].price;
+        std::string itemAtual = sales[i].item;
+
+        valorArrecadado = valorArrecadado + precoAtual;
+
+        if (precoAtual > maiorVenda)
+            maiorVenda = precoAtual;
+
+        if (precoAtual < menorVenda)
+            menorVenda = precoAtual;
+        // essa variável aqui ela serva pra identificar se algum produto já foi adicionado no vetor de produtos, sem isso aqui ficava adicionando o mesmo produto como se fosse um produto novo; 
+        bool encontrado = false;
+        // aqui caso o produto já tenha sido add anteriormente , ele somana num vetor específico daquele produto ( baseado n posição dele);
+        for (int j = 0; j < produtos.getSize(); j++) {
+            if (produtos[j] == itemAtual) {
+                somaPorProduto[j] = somaPorProduto[j] + precoAtual;
+                quantidadePorProduto[j]++;
+                encontrado = true;
+                // mn aqui eu fiquei em dúvido sobre esse break, pq a professora n gosta né ? 
+                // mas se eu tirar esse break, o loop vai ficar comparando até o final o vetor com o item atual :/;
+                break;
+            }
+        }
+        // se for a primeira vez em que o produto aparece ele é adicionado no vetor de produtos, ai como vai ter algo no vetor agora , quando rodar dnv o loop , ele vai entrar no for de antes; 
+        if (encontrado == false) {
+            produtos.push(itemAtual);
+            somaPorProduto.push(precoAtual);
+            quantidadePorProduto.push(1);
+        }
+    }
+
+    for (int i = 0; i < produtos.getSize(); i++) {
+        mediaPorProduto.push(
+            (double)somaPorProduto[i] / quantidadePorProduto[i]
+        );
+    }
+}
+
 #endif
