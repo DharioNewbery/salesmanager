@@ -13,4 +13,23 @@ bool tryParseInt(const std::string& str, int& out) {
     }
 }
 
+bool tryConvertDateToLong (const std::string& str, unsigned long& out) {
+    if (str.empty()) return false;
+    try {
+        out = dateToEpoch(str);
+        return true;
+    } catch (...) {
+        return false;
+    }
+}
+
+bool tryConvertLongToDate(unsigned long epoch, std::string& out) {
+    try {
+        out = epochToDate(epoch);
+        return true;
+    } catch (...) {
+        return false;
+    }
+}
+
 #endif

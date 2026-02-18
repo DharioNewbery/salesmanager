@@ -135,14 +135,17 @@ void addSale(SalesManager& sm, Vector<std::string> args) {
     if (args.getSize() >= 5) {
         newSale.buyer = args[1];
         newSale.item = args[2];
-        newSale.date = args[3];
+        if (!tryConvertDateToLong(args[3], newSale.date)) {
+            std::cerr << "Error: Invalid date format '" << args[3] << "'. Expected format: dd/MM/yyyy\n";
+            return;
+        }
         if (!tryParseInt(args[4], newSale.price)) {
             std::cerr << "Error: Invalid price format '" << args[4] << "'\n";
             return;
         } 
     } 
     // MODE 2: Interactive Prompts (if they just type 'add')
-    else {
+    else if (args.getSize() == 1) {
         std::string input;
         
         std::cout << "Comprador: ";
@@ -151,8 +154,14 @@ void addSale(SalesManager& sm, Vector<std::string> args) {
         std::cout << "Produto: ";
         std::getline(std::cin, newSale.item);
         
-        std::cout << "Data (dd/MM/yyyy): ";
-        std::getline(std::cin, newSale.date);
+        bool isDateValid = false;
+        while (!isDateValid) {
+            std::cout << "Data (dd/MM/yyyy): ";
+            std::getline(std::cin, input);
+            if (!tryConvertDateToLong(input, newSale.date)) {
+                std::cerr << "Error: Invalid date format '" << input << "'. Expected format: dd/MM/yyyy\n";
+            } else isDateValid = true;
+        }
 
         bool isPriceValid = false;
         while (!isPriceValid) {
@@ -162,6 +171,9 @@ void addSale(SalesManager& sm, Vector<std::string> args) {
                 std::cerr << "Error: Invalid price format '" << input << "'\n";
             } else isPriceValid = true;
         }
+    } else {
+        std::cerr << "Invalid syntax: for help, type 'add --help'";
+        return;
     }
 
     if (sm.addSale(newSale))
