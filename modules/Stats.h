@@ -26,7 +26,7 @@ void statsCommand(SalesManager& manager, Vector<std::string> args)
 
     std::cout << "===== Estatísticas =====\n";
     std::cout << "Total de vendas: " << totalDeVendas << "\n";
-    std::cout << "Valor total vendido: $" << valorArrecadado << "\n";
+    std::cout << "Valor total arrecadado: $" << valorArrecadado << "\n";
     std::cout << "Maior venda: $" << maiorVenda << "\n";
     std::cout << "Menor venda: $" << menorVenda << "\n";
 
