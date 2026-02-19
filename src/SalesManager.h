@@ -15,6 +15,8 @@ public:
     SalesManager();
     ~SalesManager();
 
+    Sale getSaleByIndex (int index);
+    int getSalesAmmount();
     bool addSale(Sale sale);
     bool removeSaleById(const int id);
     bool updateSale(Sale sale);
@@ -90,6 +92,16 @@ int SalesManager::getLargestId()
 
 SalesManager::SalesManager() : m_sales(), m_nextId(1) {}
 SalesManager::~SalesManager() {}
+
+inline Sale SalesManager::getSaleByIndex(int index)
+{
+    return m_sales[index];
+}
+
+inline int SalesManager::getSalesAmmount()
+{
+    return m_sales.getSize();
+}
 
 bool SalesManager::addSale(Sale sale) {
     sale.id = m_nextId;
