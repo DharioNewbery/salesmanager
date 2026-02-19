@@ -2,13 +2,6 @@
 #define SORT_H
 
 #include "../src/ModuleSDK.h" 
-bool SalesManager::sortByPrice() {
-    if (sales.getSize() <= 1) {
-        return false;
-    }
-     quickSort(0, sales.getSize() - 1);
-    return true;
-}
 
 void sortCommand(SalesManager& manager, Vector<std::string> args) {
     

@@ -8,8 +8,8 @@
 class SalesManager
 {
 private:
-    Vector<Sale> sales;
-    int nextId;
+    Vector<Sale> m_sales;
+    int m_nextId;
     int getLargestId();
 public:
     SalesManager();
@@ -36,6 +36,14 @@ public:
   
 };
 
+bool SalesManager::sortByPrice() {
+    if (m_sales.getSize() <= 1) {
+        return false;
+    }
+     quickSort(0, m_sales.getSize() - 1);
+    return true;
+}
+
  
 void SalesManager::quickSort(int idStart, int idEnd)  
 {
@@ -51,23 +59,23 @@ void SalesManager::quickSort(int idStart, int idEnd)
  
 int SalesManager::partition(int idStart, int idEnd) {
     
-    int pivo_2 = sales[idEnd].price;
+    int pivo_2 = m_sales[idEnd].price;
     
     int i = idStart - 1;
 
     for (int j = idStart; j < idEnd; j++) {
         
-        if (sales[j].price <= pivo_2) {
+        if (m_sales[j].price <= pivo_2) {
             i++;
-            Sale aux = sales[i];
-            sales[i] = sales[j];
-            sales[j] = aux;
+            Sale aux = m_sales[i];
+            m_sales[i] = m_sales[j];
+            m_sales[j] = aux;
         }
     }
     
-    Sale aux = sales[i + 1];
-    sales[i + 1] = sales[idEnd];
-    sales[idEnd] = aux;
+    Sale aux = m_sales[i + 1];
+    m_sales[i + 1] = m_sales[idEnd];
+    m_sales[idEnd] = aux;
 
     return i + 1;
 }
@@ -75,18 +83,18 @@ int SalesManager::partition(int idStart, int idEnd) {
 int SalesManager::getLargestId()
 {
     int biggest = 0;
-    for (int i = 0; i < sales.getSize(); i++)
-        biggest = (biggest < sales[i].id)? sales[i].id : biggest;
+    for (int i = 0; i < m_sales.getSize(); i++)
+        biggest = (biggest < m_sales[i].id)? m_sales[i].id : biggest;
     return biggest;
 }
 
-SalesManager::SalesManager() : sales(), nextId(1) {}
+SalesManager::SalesManager() : m_sales(), m_nextId(1) {}
 SalesManager::~SalesManager() {}
 
 bool SalesManager::addSale(Sale sale) {
-    sale.id = nextId;
-    sales.push(sale);
-    nextId++;
+    sale.id = m_nextId;
+    m_sales.push(sale);
+    m_nextId++;
     return true;
 }
 
@@ -94,29 +102,29 @@ bool SalesManager::removeSaleById(const int id) {
     
     Sale mockSale = Sale();
     mockSale.id = id;
-    int index = sales.find(mockSale);
+    int index = m_sales.find(mockSale);
 
     if (index == -1) return false;
 
-    sales.remove(index);
+    m_sales.remove(index);
     return true;
 }
 
 inline bool SalesManager::updateSale(Sale sale)
 {
-    int index = sales.find(sale); 
+    int index = m_sales.find(sale); 
     if (index == -1) return false;
 
-    sales.replace(index, sale);
+    m_sales.replace(index, sale);
     return true;
 }
 
 void SalesManager::listSales(const int start, int end) {
 
-    if (end == INT_MAX) end = sales.getSize();
+    if (end == INT_MAX) end = m_sales.getSize();
     
     for (int i = start; i < end; i++)
-        sales[i].display();
+        m_sales[i].display();
     
 }
 
@@ -128,12 +136,12 @@ bool SalesManager::loadSales(std::string filename, bool append)
         if (append) {
             for (int i = 0; i < loadedData.getSize(); i++) {
                 // Assign a NEW unique ID based on the CURRENT manager state
-                loadedData[i].id = nextId++; 
-                sales.push(loadedData[i]);
+                loadedData[i].id = m_nextId++; 
+                m_sales.push(loadedData[i]);
             }
         } else {
-            sales = loadedData;
-            nextId = getLargestId() + 1;
+            m_sales = loadedData;
+            m_nextId = getLargestId() + 1;
         }
         return true;
     } catch (...) { return false; }
@@ -143,7 +151,7 @@ bool SalesManager::saveSales(std::string filename, bool override)
 {
     try {
         if (override) { loadSales(filename, true); }
-        saveToFile(filename, sales);
+        saveToFile(filename, m_sales);
         return true;
     }
     catch (...) { return false; }
@@ -158,7 +166,7 @@ void SalesManager::getStats(
     Vector<double>& mediaPorProduto
 ) {
     // verifica o total de vendas efetuadas, eu pensei em usar o sales.id mas ai teria que ficar verificando o maior id, e se tiver um id faltando por conta de uma venda removida, ia dar problema. Então é mais seguro usar o getSize na classe inteira mesmo;
-    totalDeVendas = sales.getSize();
+    totalDeVendas = m_sales.getSize();
     valorArrecadado = 0;
     // aqui eu tive que criar a variavel de produtos e media, pq quando eu rodava o comando aparentemente ficava os valores anteriores , ai eu precisava resetar esses vetores(se não a média dava errada), mas n conseguir pensar numa forma melhor (fora rodar um vetor vazio toda vez que chamar o comando stats); 
     produtos = Vector<std::string>();
@@ -170,8 +178,8 @@ void SalesManager::getStats(
         return;
     }
 
-    maiorVenda = sales[0].price;
-    menorVenda = sales[0].price;
+    maiorVenda = m_sales[0].price;
+    menorVenda = m_sales[0].price;
 
     // esses vetores aqui eu vou usar eles pela posição, então basicamente posições iguais = mesma informação;
     // são vetores acumuladores; -> senão , n tem média ; 
@@ -180,8 +188,8 @@ void SalesManager::getStats(
     // esse loop aqui é o que vai somar o meu valor total;
     for (int i = 0; i < totalDeVendas; i++) {
 
-        int precoAtual = sales[i].price;
-        std::string itemAtual = sales[i].item;
+        int precoAtual = m_sales[i].price;
+        std::string itemAtual = m_sales[i].item;
 
         valorArrecadado = valorArrecadado + precoAtual;
 
