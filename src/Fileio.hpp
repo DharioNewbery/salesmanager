@@ -19,12 +19,13 @@ void saveToFile(const std::string& filename, Vector<Sale> sales) {
 Vector<Sale> loadFromFile(const std::string& filename) {
     std::ifstream file(filename);
     Vector<Sale> sales = Vector<Sale>();
-
+    Sale newSale;
     if (!file.is_open()) return sales; // If file doesn't exist, just start empty
 
     std::string line;
     while (std::getline(file, line)) {
         if (line.empty()) continue;
+        newSale = Sale::fromCsv(line);
         sales.push(Sale::fromCsv(line));
     }
 
