@@ -25,15 +25,15 @@ void statsCommand(SalesManager& manager, Vector<std::string> args)
     }
 
     std::cout << "===== Estatísticas =====\n";
-    std::cout << "Total de vendas: " << totalDeVendas << "\n";
-    std::cout << "Valor total arrecadado: $" << valorArrecadado << "\n";
-    std::cout << "Maior venda: $" << maiorVenda << "\n";
-    std::cout << "Menor venda: $" << menorVenda << "\n";
+    std::cout << "Total de vendas: " << price::intToPrice(totalDeVendas) << "\n";
+    std::cout << "Valor total arrecadado: $" << price::intToPrice(valorArrecadado) << "\n";
+    std::cout << "Maior venda: $" << price::intToPrice(maiorVenda) << "\n";
+    std::cout << "Menor venda: $" << price::intToPrice(menorVenda) << "\n";
 
     std::cout << "\n--- Média por Produto ---\n";
     for (int i = 0; i < produtos.getSize(); i++) {
         std::cout << produtos[i]
-                  << " → $" << media[i]
+                  << " -> $" << price::intToPrice(media[i])
                   << "\n";
     }
 }

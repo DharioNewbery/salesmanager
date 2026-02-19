@@ -16,7 +16,7 @@ bool tryParseInt(const std::string& str, int& out) {
 bool tryConvertDateToLong (const std::string& str, unsigned long& out) {
     if (str.empty()) return false;
     try {
-        out = dateToEpoch(str);
+        out = date::dateToEpoch(str);
         return true;
     } catch (...) {
         return false;
@@ -25,7 +25,25 @@ bool tryConvertDateToLong (const std::string& str, unsigned long& out) {
 
 bool tryConvertLongToDate(unsigned long epoch, std::string& out) {
     try {
-        out = epochToDate(epoch);
+        out = date::epochToDate(epoch);
+        return true;
+    } catch (...) {
+        return false;
+    }
+}
+
+bool tryConvertIntToPrice (int value, std::string& out) {
+    try {
+        out = price::intToPrice(value);
+        return true;
+    } catch (...) {
+        return false;
+    }
+}
+
+bool tryConvertPriceToInt (const std::string& price, int& out) {
+    try {
+        out = price::priceToInt(price);
         return true;
     } catch (...) {
         return false;

@@ -131,7 +131,7 @@ void removeSale(SalesManager& sm, Vector<std::string> args) {
 void addSale(SalesManager& sm, Vector<std::string> args) {
     Sale newSale;
 
-    // MODE 1: Fast Add (e.g., add "John Doe" "Apple" "01/01/2026" 150)
+    // MODE 1: Fast Add (e.g., add "Dhario Newbery" "Garrafa d'água" "01/01/2026" 2,50)
     if (args.getSize() >= 5) {
         newSale.buyer = args[1];
         newSale.item = args[2];
@@ -139,12 +139,12 @@ void addSale(SalesManager& sm, Vector<std::string> args) {
             std::cerr << "Error: Invalid date format '" << args[3] << "'. Expected format: dd/MM/yyyy\n";
             return;
         }
-        if (!tryParseInt(args[4], newSale.price)) {
+        if (!tryConvertPriceToInt(args[4], newSale.price)) {
             std::cerr << "Error: Invalid price format '" << args[4] << "'\n";
             return;
         } 
     } 
-    // MODE 2: Interactive Prompts (if they just type 'add')
+    // MODE 2: Interactive Prompts (just 'add')
     else if (args.getSize() == 1) {
         std::string input;
         
@@ -167,12 +167,14 @@ void addSale(SalesManager& sm, Vector<std::string> args) {
         while (!isPriceValid) {
             std::cout << "Valor: ";
             std::getline(std::cin, input);
-            if (!tryParseInt(input, newSale.price)) {
-                std::cerr << "Error: Invalid price format '" << input << "'\n";
+            if (!tryConvertPriceToInt(input, newSale.price)) {
+                std::cerr << "Error: Invalid price format '" << input << "'. Expected format: dd/MM/yyyy\n";
             } else isPriceValid = true;
         }
+
+
     } else {
-        std::cerr << "Invalid syntax: for help, type 'add --help'";
+        std::cerr << "Invalid syntax: for help, type 'add --help'\n";
         return;
     }
 

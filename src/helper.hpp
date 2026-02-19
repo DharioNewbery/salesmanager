@@ -3,65 +3,56 @@
 
 #include <string>
 #include <stdexcept>
+#include <iostream>
+#include <ctime>
+#include <iomanip>
+#include <sstream>
+#include <cmath>
+
+namespace date {
+    
+    unsigned long dateToEpoch(const std::string& date) {
+        std::tm tm = {};
+        std::istringstream ss(date);
+        ss >> std::get_time(&tm, "%d/%m/%Y");
+        return std::mktime(&tm);
+    }
+
+    std::string epochToDate(unsigned long epoch) {
+        std::time_t t = epoch;
+        std::tm* tm = std::localtime(&t);
+        char buffer[11];
+        std::strftime(buffer, sizeof(buffer), "%d/%m/%Y", tm);
+        return std::string(buffer);
+    }
+}
 namespace price {
-    bool getPrice(const std::string& date, int& value) {
-        std::string s_value;
+    int priceToInt(const std::string& date) {
+        int value = 0;
+        std::string s_value, s_valueCents;
         
         size_t index = date.find('.');
         if (index == -1) index = date.find(',');
         if (index == -1) index = 0;
 
-        s_value = date.substr(index);
+        s_value = date.substr(0, index);
+        s_valueCents = date.substr(index + 1);
+        if (s_valueCents.size() == 1) s_valueCents += "0";
 
-        try {
-            value = std::stoi(s_value);
-        }
-        catch (...) { return false; }
+        value = std::stoi(s_value);
+        value *= 100; //converting to cents
+        value += std::stoi(s_valueCents);
 
-        return true;
-    } 
-}
-namespace date {
-    bool getDMY(const std::string& date, int& day, int& month, int& year) {
-        std::string s_day, s_month, s_year;
-        s_day = date.substr(0, 2);
-        s_month = date.substr(2, 2);
-        s_year = date.substr(4, 2);
-
-        try
-        {
-            day = std::stoi(s_day);
-            month = std::stoi(s_month);
-            year = std::stoi(s_year);
-        }
-        catch(...) { return false; }
-
-        return true;
+        return value;
     }
 
-    bool isDateValid(const std::string& date)
-    {
-        int day, month, year;
-        if (!getDMY(date, day, month, year)) return false;
-        
-        if ((0 > day || day > 31)
-        || (0 > month || month > 12)
-        || (1000 > year || year > 9999)
-        ) return false;
-        
-        return true;
-    }
+    std::string intToPrice(const int value) {
 
-    unsigned long dateToMillis(const std::string& date)
-    {
-        if (!isDateValid(date)) throw std::invalid_argument("The given string is not a valid date");
-
-        int day, month, week;
-    }
-
-    std::string millisToDate(unsigned long dateMillis)
-    {
-        return std::string();
+        int whole = 0, cents = 0;
+        whole = value / 100;
+        cents = (value / 100.0 - whole) * 100; 
+ 
+        return std::to_string(whole) + "," + std::to_string(cents);
     }
 }
 
