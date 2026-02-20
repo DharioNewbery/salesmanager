@@ -309,13 +309,6 @@ bool SalesManager::sortBy(std::string oQueVaiSerOrdenado, std::string ordem)
                     precisaTrocar = toLower(m_sales[i].buyer) < toLower(m_sales[j].buyer);
             }
 
-            else if (oQueVaiSerOrdenado == "preço") {
-                if (praCima)
-                    precisaTrocar = m_sales[i].price > m_sales[j].price;
-                else
-                    precisaTrocar = m_sales[i].price < m_sales[j].price;
-            }
-
             if (precisaTrocar) {
                 Sale aux = m_sales[i];
                 m_sales[i] = m_sales[j];
