@@ -31,8 +31,8 @@ namespace price {
         std::string s_value, s_valueCents;
         
         size_t index = date.find('.');
-        if (index == -1) index = date.find(',');
-        if (index == -1) index = 0;
+        if (index == std::string::npos) index = date.find(',');
+        if (index == std::string::npos) index = 0;
 
         s_value = date.substr(0, index);
         s_valueCents = date.substr(index + 1);
