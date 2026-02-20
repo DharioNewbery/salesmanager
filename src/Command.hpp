@@ -12,6 +12,7 @@
 
 class Command {
 public:
+    virtual std::string getHelpMessage() const { return "Nenhuma mensagem de ajuda disponivel para este comando"; }
     virtual void execute(SalesManager& sm, Vector<std::string> args) = 0;
 };
 
@@ -25,7 +26,6 @@ public:
 
 struct CommandRegistrator {
     CommandRegistrator(std::string name, Command* cmd) {
-        std::cout << "new command added: " << name << std::endl;
         CommandRegistry::getCommands()[name] = cmd;
     }
 }; 
