@@ -22,15 +22,20 @@ int main () {
             continue; // Exit the loop and end the program
         }
 
-        // Checks if command exists and executes it, passing the SalesManager and the arguments
-        if (commandMap.count(tokens[0])) { 
-            auto& command = commandMap[tokens[0]];
-            tokens.remove(0); // Remove the command name from the arguments list
-            command->execute(sm, tokens);
-            // commands[tokens[0]](sm, tokens);
+        try {
+            // Checks if command exists and executes it, passing the SalesManager and the arguments
+            if (commandMap.count(tokens[0])) { 
+                auto& command = commandMap[tokens[0]];
+                tokens.remove(0); // Remove the command name from the arguments list
+                command->execute(sm, tokens);
+                // commands[tokens[0]](sm, tokens);
+            }
+            else
+                std::cout << "Unknown command.\n";
+    
+        } catch (const std::exception& e) {
+            std::cerr << "Error executing command: " << e.what() << std::endl;
         }
-        else
-            std::cout << "Unknown command.\n";
     }
 
     return 0;
