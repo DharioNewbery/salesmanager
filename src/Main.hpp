@@ -3,7 +3,7 @@
 
 #include "Vector.hpp"
 #include "SalesManager.hpp"
-#include "utils.hpp"
+#include "Utils.hpp"
 #include "Command.hpp"
 
 #endif

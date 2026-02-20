@@ -19,7 +19,7 @@ int main () {
         
         if (tokens[0] == "exit") {
             isRunning = false;
-            continue;
+            continue; // Exit the loop and end the program
         }
 
         // Checks if command exists and executes it, passing the SalesManager and the arguments
