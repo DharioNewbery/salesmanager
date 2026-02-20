@@ -1,9 +1,10 @@
 #ifndef SALES_MANAGER_H
 #define SALES_MANAGER_H
 
-#include "Vector.h"
-#include "Sale.h"
+#include "Vector.hpp"
+#include "Sale.hpp"
 #include "Fileio.hpp"
+#include <climits>
 
 class SalesManager
 {
@@ -35,6 +36,7 @@ public:
         Vector<std::string>& produtos,
         Vector<double>& mediaPorProduto
     );
+    Vector<Sale> getSales() { return m_sales; }
   
 };
 

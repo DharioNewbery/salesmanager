@@ -1,25 +1,18 @@
-#include <iostream>
-#include "Vector.h"
-#include "SalesManager.h"
-#include "ModuleSDK.h"
-#include "InputHandler.h"
 
-using namespace std;
+#include "Main.hpp"
 
 int main () {
-    auto& commands = ModuleRegistry::getCommands();
-    auto& helpMessages = ModuleRegistry::getHelpMessages();
-    
+    auto& commandMap = CommandRegistry::getCommands();
+
     SalesManager sm = SalesManager();
 
     bool isRunning = true;
-    Vector<string> tokens;
-    string input;
+    Vector<std::string> tokens;
+    std::string input;
     
     while (isRunning) {
-        getline(cin, input);
-        tokens = splitInput(input);
-                
+        getline(std::cin, input);
+        tokens = input::splitInput(input);
         
         if (tokens.getSize() == 0)
             continue; // Guard for empty command lines;
@@ -29,15 +22,15 @@ int main () {
             continue;
         }
 
-        if (commands.count(tokens[0]) && tokens.getSize() == 2 && (tokens[1] == "--help" || tokens[1] == "--h")) {
-            std::cout << helpMessages[tokens[0]] << std::endl;
-            continue;
+        // Checks if command exists and executes it, passing the SalesManager and the arguments
+        if (commandMap.count(tokens[0])) { 
+            auto& command = commandMap[tokens[0]];
+            tokens.remove(0); // Remove the command name from the arguments list
+            command->execute(sm, tokens);
+            // commands[tokens[0]](sm, tokens);
         }
-
-        if (commands.count(tokens[0]))
-            commands[tokens[0]](sm, tokens);
         else
-            cout << "Unknown command.\n";
+            std::cout << "Unknown command.\n";
     }
 
     return 0;

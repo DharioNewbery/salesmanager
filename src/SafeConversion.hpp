@@ -2,6 +2,7 @@
 #define SAFE_CONVERSION_HPP
 
 #include <string>
+#include "utils.hpp"
 
 bool tryParseInt(const std::string& str, int& out) {
     if (str.empty()) return false;

@@ -2,7 +2,7 @@
 #define VECTOR_H
 
 #include <stdexcept>
-#include <climits>
+#include <iostream>
 
 template <typename T>
 class Vector {

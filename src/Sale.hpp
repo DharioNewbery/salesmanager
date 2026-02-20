@@ -1,8 +1,10 @@
 #ifndef SALE_H
 #define SALE_H
 
+#include <string>
+#include <sstream>
 #include <iostream>
-#include "helper.hpp"
+#include "utils.hpp"
 
 struct Sale {
     int id;
