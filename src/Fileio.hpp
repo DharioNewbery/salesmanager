@@ -1,8 +1,8 @@
 #ifndef FILEIO_HPP
 #define FILEIO_HPP
 
-#include "Sale.h"
-#include "Vector.h"
+#include "Sale.hpp"
+#include "Vector.hpp"
 #include <fstream>
 #include <string>
 

@@ -27,8 +27,10 @@ public:
     void quickSort(int idStart, int idEnd);
     int  partition(int idStart, int idEnd);
     bool sortByPrice();
+
     void searchBy(std::string oQueBusca, std::string parametro);
     bool sortBy(std::string oQueVaiSerOrdenado, std::string ordem = "asc");
+
     // Aqui a função ela vai reescrever na própria variavel os valores , então n retorna nada. 
     void getStats(
         int& totalDeVendas, 
@@ -41,8 +43,6 @@ public:
     Vector<Sale> getSales() { return m_sales; }
   
 };
-
-
 
 bool SalesManager::sortByPrice() {
     if (m_sales.getSize() <= 1) {
