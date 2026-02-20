@@ -102,6 +102,7 @@ public:
     return "Este comando adiciona uma nova venda. Ele pode ser usado de duas formas:\n\
 1. add <string buyer> <string item> <string date> <int price>: adiciona uma nova venda com os detalhes especificados.\n\
 A data deve estar no formato dd/MM/yyyy e o preço deve ser um número em reais separando centavos por ',' ou '.' (10 ou 20,50).\n\
+use aspas duplas ("") para nomes e produtos que contêm espaços.\n\
 2. add: inicia uma rotina interativa que solicita os detalhes da venda um por um.\n\
 Exemplo de uso: add \"Dhario Newbery\" \"Garrafa d'água\" 01/01/2026 2,50 (adiciona uma venda para Dhario Newbery comprando uma garrafa d'água por R$2,50 no dia 01/01/2026).";}
 
@@ -137,7 +138,7 @@ private:
             std::cout << "Valor: ";
             std::getline(std::cin, input);
             if (!tryConvertPriceToInt(input, newSale.price)) {
-                std::cerr << "Error: Invalid price format '" << input << "'. Expected format: dd/MM/yyyy\n";
+                std::cerr << "Error: Invalid price format '" << input << "'. Expected format: '10' or '10,0' or '10.0'\n";
             } else isPriceValid = true;
         }
         return newSale;
