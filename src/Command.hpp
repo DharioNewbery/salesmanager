@@ -14,6 +14,8 @@ class Command {
 public:
     virtual std::string getHelpMessage() const { return "Nenhuma mensagem de ajuda disponivel para este comando"; }
     virtual void execute(SalesManager& sm, Vector<std::string> args) = 0;
+
+    virtual ~Command() = default;
 };
 
 class CommandRegistry {
@@ -22,12 +24,20 @@ public:
         static std::unordered_map<std::string, Command*> commands;
         return commands;
     }
+
+    ~CommandRegistry() {
+        for (auto& pair : getCommands()) {
+            delete pair.second;
+        }
+    }
 };
 
 struct CommandRegistrator {
     CommandRegistrator(std::string name, Command* cmd) {
         CommandRegistry::getCommands()[name] = cmd;
     }
+    
+    ~CommandRegistrator() = default;
 }; 
 
 #endif
