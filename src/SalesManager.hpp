@@ -6,6 +6,12 @@
 #include "Fileio.hpp"
 #include <climits>
 
+std::string toLower(std::string str){
+    for (int i = 0; i < str.size(); i++)
+        str[i] = std::tolower(str[i]);
+    return str;
+}
+
 class SalesManager
 {
 private:
@@ -243,5 +249,83 @@ void SalesManager::getStats(
         );
     }
 }
+void SalesManager::searchBy(std::string oQueBusca, std::string parametro)
+{
+    for (int i = 0; i < m_sales.getSize(); i++)
+    {
+        bool verificador = false;
+
+        if (oQueBusca == "item")
+            verificador = (m_sales[i].item.find(parametro) != std::string::npos);
+
+        else if (oQueBusca == "comprador")
+            verificador = (m_sales[i].buyer.find(parametro) != std::string::npos);
+
+        if (verificador)
+        {
+            m_sales[i].display();
+        }
+    }
+}
+
+bool SalesManager::sortBy(std::string oQueVaiSerOrdenado, std::string ordem)
+{
+    if (m_sales.getSize() <= 1)
+        return false;
+
+    bool praCima = (ordem != "desc");
+    //loop principal ;
+    for (int i = 0; i < m_sales.getSize() - 1; i++) {
+        //loop secundário só pra fazer as comparações; 
+        for (int j = i + 1; j < m_sales.getSize(); j++) {
+
+            bool precisaTrocar = false;
+
+            if (oQueVaiSerOrdenado == "data") {
+                if (praCima)
+                    precisaTrocar = m_sales[i].date > m_sales[j].date;
+                else
+                    precisaTrocar = m_sales[i].date < m_sales[j].date;
+            }
+
+            else if (oQueVaiSerOrdenado == "id") {
+                if (praCima)
+                    precisaTrocar = m_sales[i].id > m_sales[j].id;
+                else
+                    precisaTrocar = m_sales[i].id < m_sales[j].id;
+            }
+
+            else if (oQueVaiSerOrdenado == "item") {
+                if (praCima)
+                    precisaTrocar = toLower(m_sales[i].item) > toLower(m_sales[j].item);
+                else
+                    precisaTrocar = toLower(m_sales[i].item) < toLower(m_sales[j].item);
+            }
+
+            else if (oQueVaiSerOrdenado == "comprador") {
+                if (praCima)
+                    precisaTrocar = toLower(m_sales[i].buyer) > toLower(m_sales[j].buyer);
+                else
+                    precisaTrocar = toLower(m_sales[i].buyer) < toLower(m_sales[j].buyer);
+            }
+
+            else if (oQueVaiSerOrdenado == "preço") {
+                if (praCima)
+                    precisaTrocar = m_sales[i].price > m_sales[j].price;
+                else
+                    precisaTrocar = m_sales[i].price < m_sales[j].price;
+            }
+
+            if (precisaTrocar) {
+                Sale aux = m_sales[i];
+                m_sales[i] = m_sales[j];
+                m_sales[j] = aux;
+            }
+        }
+    }
+
+    return true;
+}
+
 
 #endif

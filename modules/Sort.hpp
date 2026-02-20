@@ -12,7 +12,31 @@ public:
             std::cout << "Não há vendas para ordenar.\n";
     }
 };
+class SortByCommand: public Command {
+public:
+    void execute(SalesManager& manager, Vector<std::string> args) override {
+        if (args.getSize() < 1) {
+            std::cout << "Precisa de usar: sort <oQueVaiSerOrdenado> , Ordem: (asc/desc)\n";
+            return;
+        }
 
+        std::string oQueVaiSerOrdenado = args[0];
+        std::string ordem = "asc";
+
+        if (args.getSize() >= 2)
+            ordem = args[1];
+
+        if (manager.sortBy(oQueVaiSerOrdenado, ordem)) {
+            std::cout << "Vendas ordenadas por " << oQueVaiSerOrdenado
+                    << " (" << ordem << ") com sucesso!\n";
+        }
+        else {
+            std::cout << "Não foi possível ordenar.\n";
+        }
+    }
+};
+
+CommandRegistrator registerSortByCommand("sortBy", new SortByCommand());
 CommandRegistrator registerSortCommand("sort", new SortCommand());
 
 #endif   
