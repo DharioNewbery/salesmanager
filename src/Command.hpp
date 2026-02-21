@@ -8,7 +8,6 @@
 #include "Utils.hpp"
 #include "Vector.hpp"
 #include "SalesManager.hpp"
-#include "SafeConversion.hpp"
 
 enum class ArgType {
     STRING,
