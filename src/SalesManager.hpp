@@ -17,7 +17,7 @@ class SalesManager
 private:
     Vector<Sale> m_sales;
     int m_nextId;
-    int getLargestId();
+    int getBiggestId();
 public:
     SalesManager();
     ~SalesManager();
@@ -27,9 +27,9 @@ public:
     bool addSale(Sale sale);
     bool removeSaleById(const int id);
     bool updateSale(Sale sale);
-    void listSales(const int start = 0, int end = INT_MAX);
     bool loadSales(std::string filename, bool append = false);
     bool saveSales(std::string filename, bool override = false);
+    void flush();
     void quickSort(int idStart, int idEnd);
     int  partition(int idStart, int idEnd);
     bool sortByPrice();
@@ -94,12 +94,9 @@ int SalesManager::partition(int idStart, int idEnd) {
     return i + 1;
 }
 
-int SalesManager::getLargestId()
+int SalesManager::getBiggestId()
 {
-    int biggest = 0;
-    for (int i = 0; i < m_sales.getSize(); i++)
-        biggest = (biggest < m_sales[i].id)? m_sales[i].id : biggest;
-    return biggest;
+    return salesManagerUtils::getBiggestId(m_sales);
 }
 
 SalesManager::SalesManager() : m_sales(), m_nextId(1) {}
@@ -143,15 +140,6 @@ inline bool SalesManager::updateSale(Sale sale)
     return true;
 }
 
-void SalesManager::listSales(const int start, int end) {
-
-    if (end == INT_MAX) end = m_sales.getSize();
-    
-    for (int i = start; i < end; i++)
-        m_sales[i].display();
-    
-}
-
 bool SalesManager::loadSales(std::string filename, bool append)
 {
     try {
@@ -165,20 +153,41 @@ bool SalesManager::loadSales(std::string filename, bool append)
             }
         } else {
             m_sales = loadedData;
-            m_nextId = getLargestId() + 1;
+            m_nextId = getBiggestId() + 1;
         }
         return true;
     } catch (...) { return false; }
 }
 
-bool SalesManager::saveSales(std::string filename, bool override)
+void SalesManager::flush()
 {
+    m_sales = Vector<Sale>();
+    m_nextId = 1;
+}
+
+bool SalesManager::saveSales(std::string filename, bool append)
+{
+
     try {
-        if (override) { loadSales(filename, true); }
-        saveToFile(filename, m_sales);
-        return true;
-    }
-    catch (...) { return false; }
+        Vector<Sale> loadedData;
+
+        if (append) {
+            loadedData = loadFromFile(filename);
+            int largestId = salesManagerUtils::getBiggestId(loadedData);
+
+            for (int i = 0; i < m_sales.getSize(); i++) {
+                Sale currentSale = m_sales[i];
+                currentSale.id = largestId + 1;
+                loadedData.push(currentSale);
+                largestId++;
+            }
+        } else {
+            loadedData = m_sales;
+        }
+
+        saveToFile(filename, loadedData);
+    } catch (...) { return false; }
+    return true;
 }
 
 void SalesManager::getStats(
@@ -263,7 +272,7 @@ void SalesManager::searchBy(std::string oQueBusca, std::string parametro)
 
         if (verificador)
         {
-            m_sales[i].display();
+            print::printSale(m_sales[i]);
         }
     }
 }

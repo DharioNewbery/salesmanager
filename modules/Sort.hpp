@@ -12,6 +12,7 @@ public:
             std::cout << "Não há vendas para ordenar.\n";
     }
 };
+
 class SortByCommand: public Command {
 public:
     void execute(SalesManager& manager, Vector<std::string> args) override {

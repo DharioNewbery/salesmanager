@@ -41,12 +41,6 @@ struct Sale {
 
         return s;
     }
-    
-    void display() const {
-        std::cout << "ID: " << id << " | Buyer: " << buyer
-        << " | Item: " << item << " | Date: "
-        << date << " | Price: $" << price::toPrice(price) << std::endl;
-    }
 };
 
 #endif

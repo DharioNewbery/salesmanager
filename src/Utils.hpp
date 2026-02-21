@@ -5,8 +5,17 @@
 #include <sstream>
 #include <iomanip>
 #include <climits>
-
 #include "Vector.hpp"
+#include "Sale.hpp"
+
+namespace salesManagerUtils {
+    int getBiggestId(Vector<Sale> sales) {
+        int biggest = 0;
+        for (int i = 0; i < sales.getSize(); i++)
+            biggest = (biggest < sales[i].id)? sales[i].id : biggest;
+        return biggest;
+    }
+}
 
 namespace date {
     bool isFormatValid(const std::string& date) {
@@ -114,6 +123,14 @@ namespace print {
         return text + std::string(padding, ' ');
     }
 
+    void printSale(const Sale& sale) {
+        std::cout << "ID: " << sale.id 
+                  << " | Buyer: " << sale.buyer 
+                  << " | Item: " << sale.item 
+                  << " | Date: " << sale.date 
+                  << " | Price: R$" << std::fixed << std::setprecision(2) << sale.price / 100.0 
+                  << std::endl;
+    }
     void printSalesList(Vector<Sale> sales, int start = 0, int end = INT_MAX) {
         if (end == INT_MAX) end = sales.getSize();
         const int wIndex = 4;

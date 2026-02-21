@@ -37,22 +37,24 @@ public:
     std::string getHelpMessage() const override {
     return "Este comando carrega vendas de um arquivo. Ele pode ser usado da seguinte forma:\n\
 1. load <filename>: carrega todas as vendas do arquivo especificado.\n\
-Exemplo de uso: load vendas.txt";}
+2. load <filename> -a: carrega as vendas do arquivo e as adiciona às vendas já existentes (sem substituir).\n\
+Exemplo de uso: load vendas.txt -a";}
     
     Vector<Signature> getSignatures() const override {
         return {
-            {ArgType::STRING} // load <filename>
+            {ArgType::STRING}, // load <filename>
+            {ArgType::STRING, ArgType::FLAG} // load <filename> <append>
         };
     }
 
     void execute(SalesManager& sm, Vector<std::string> args) override {
-        if (args.getSize() != 1) {
-            std::cerr << "Usage: load <filename>\n";
-            return;
-        }
-
+        
         const std::string& filename = args[0];
-        sm.loadSales(filename);
+        bool append = false;
+        if (args.getSize() == 2) {
+            append = (args[1] == "-a");
+        }
+        sm.loadSales(filename, append);
     }
 };
 
@@ -61,22 +63,25 @@ public:
     std::string getHelpMessage() const override {
     return "Este comando salva as vendas em um arquivo. Ele pode ser usado da seguinte forma:\n\
 1. save <filename>: salva todas as vendas no arquivo especificado.\n\
-Exemplo de uso: save vendas.txt";}
+2. save <filename> -a: salva as vendas no arquivo, sem sobreescrever as vendas que já estão armazenadas lá. \n\
+Ou seja, o arquivo final conterá tanto as vendas atuais quanto as vendas previamente salvas no arquivo.\n\
+Exemplo de uso: save vendas.txt -a";}
     
     Vector<Signature> getSignatures() const override {
         return {
-            {ArgType::STRING} // save <filename>
+            {ArgType::STRING}, // save <filename>
+            {ArgType::STRING, ArgType::FLAG} // save <filename> <override>
         };
     }
 
     void execute(SalesManager& sm, Vector<std::string> args) override {
-        if (args.getSize() != 1) {
-            std::cerr << "Usage: save <filename>\n";
-            return;
-        }
 
         const std::string& filename = args[0];
-        sm.saveSales(filename);
+        bool append = false;
+        if (args.getSize() == 2) {
+            append = (args[1] == "-a");
+        }
+        sm.saveSales(filename, append);
     }
 };
 

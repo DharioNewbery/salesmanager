@@ -7,6 +7,8 @@ int main() {
     
     std::cout << "SalesManager CLI - Digite 'exit' para sair ou 'help' para ajuda e comandos disponíveis.\n";
 
+    CommandDispatcher::dispatch("load test_file.txt", sm);
+
     bool isRunning = true;
     while (isRunning) {
         

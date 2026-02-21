@@ -13,7 +13,8 @@ enum class ArgType {
     STRING,
     INT,
     DATE,
-    MONEY
+    MONEY,
+    FLAG
 };
 
 using Signature = Vector<ArgType>;
