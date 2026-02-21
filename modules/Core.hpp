@@ -48,13 +48,21 @@ Exemplo de uso: load vendas.txt -a";}
     }
 
     void execute(SalesManager& sm, Vector<std::string> args) override {
-        
         const std::string& filename = args[0];
+        
+        if (!std::ifstream(filename)) {
+            std::cout << "Falha ao carregar de '" << filename << "'Arquivo nao encontrado.";
+            return;
+        }
+
         bool append = false;
         if (args.getSize() == 2) {
             append = (args[1] == "-a");
         }
+
+
         sm.loadSales(filename, append);
+        std::cout << "Arquivo '" <<  filename << "carregado com sucesso!\n";
     }
 };
 
@@ -82,6 +90,7 @@ Exemplo de uso: save vendas.txt -a";}
             append = (args[1] == "-a");
         }
         sm.saveSales(filename, append);
+        std::cout << "Arquivo '" << filename << "' salvo com sucesso!\n";
     }
 };
 
