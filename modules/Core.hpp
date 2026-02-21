@@ -23,10 +23,10 @@ Exemplo de uso: list 0 10 (lista as primeiras 10 vendas).";
 
     void execute(SalesManager& sm, Vector<std::string> args) override {
         int start = 0, end = INT_MAX;
-        if (args.getSize() > 1)
-            start = std::stoi(args[1]);
-        if (args.getSize() > 2) {
-            end = std::stoi(args[2]);
+        if (args.getSize() > 0)
+            start = std::stoi(args[0]);
+        if (args.getSize() > 1) {
+            end = std::stoi(args[1]);
         }
         print::printSalesList(sm.getSales(), start, end);
     }
