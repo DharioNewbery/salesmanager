@@ -77,15 +77,47 @@ public:
     }
 
 private:
+
+    static bool tryConvert(const std::string& arg, ArgType t) {
+        bool isValid = true;
+        switch (t)
+        {
+            case ArgType::STRING: break;
+            case ArgType::INT:
+                try { std::stoi(arg); }
+                catch (...) { isValid = false; }
+                break;
+            case ArgType::DATE:
+                isValid = date::isFormatValid(arg);
+                break;
+            case ArgType::MONEY:
+                try { std::stoul(arg); }
+                catch (...) { isValid = false; }
+                break;
+            case ArgType::FLAG:
+                isValid = flag::isFormatValid(arg);
+                break;
+        }
+        return isValid;
+        
+    }
     static bool validate(Command* cmd, Vector<std::string> args) {
         auto signatures = cmd->getSignatures();
         if (signatures.isEmpty()) return true; // Se não definiu assinaturas, assume livre
-
+        
         for (int i = 0; i < signatures.getSize(); i++) {
             Signature sig = signatures[i];
+            int sigSize = sig.getSize();
+         
             if (sig.getSize() == args.getSize()) {
-                // Implementar lógica de checagem de tipos (int, float, etc) aqui
-                return true; 
+                
+                if (sigSize == 0) return true; // Assinaturas vazias.
+
+
+                for (int j = 0; j < sigSize; j++) {
+                    if (!tryConvert(args[j], sig[j])) return false;
+                }
+                return true;
             }
         }
         return false;

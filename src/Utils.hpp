@@ -17,6 +17,14 @@ namespace salesManagerUtils {
     }
 }
 
+namespace flag {
+    bool isFormatValid(const std::string& date) {
+        if (date.length() != 2) return false;
+        if (date[0] != '-') return false;
+        return true;
+    }
+}
+
 namespace date {
     bool isFormatValid(const std::string& date) {
         if (date.length() != 10) return false;
