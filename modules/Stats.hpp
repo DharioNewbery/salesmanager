@@ -27,14 +27,14 @@ public:
 
         std::cout << "===== Estatísticas =====\n";
         std::cout << "Total de vendas: " << totalDeVendas << "\n";
-        std::cout << "Valor total arrecadado: $" << price::intToPrice(valorArrecadado) << "\n";
-        std::cout << "Maior venda: $" << price::intToPrice(maiorVenda) << "\n";
-        std::cout << "Menor venda: $" << price::intToPrice(menorVenda) << "\n";
+        std::cout << "Valor total arrecadado: $" << price::toPrice(valorArrecadado) << "\n";
+        std::cout << "Maior venda: $" << price::toPrice(maiorVenda) << "\n";
+        std::cout << "Menor venda: $" << price::toPrice(menorVenda) << "\n";
 
         std::cout << "\n--- Média por Produto ---\n";
         for (int i = 0; i < produtos.getSize(); i++) {
             std::cout << produtos[i]
-                    << " -> $" << price::intToPrice(media[i])
+                    << " -> $" << price::toPrice(media[i])
                     << "\n";
         }
     }

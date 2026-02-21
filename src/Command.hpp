@@ -10,9 +10,20 @@
 #include "SalesManager.hpp"
 #include "SafeConversion.hpp"
 
+enum class ArgType {
+    STRING,
+    INT,
+    DATE,
+    MONEY
+};
+
+using Signature = Vector<ArgType>;
+
 class Command {
 public:
     virtual std::string getHelpMessage() const { return "Nenhuma mensagem de ajuda disponivel para este comando"; }
+    virtual Vector<Signature> getSignatures() const { return {}; }
+
     virtual void execute(SalesManager& sm, Vector<std::string> args) = 0;
 
     virtual ~Command() = default;
@@ -38,6 +49,47 @@ struct CommandRegistrator {
     }
     
     ~CommandRegistrator() = default;
-}; 
+};
+
+class CommandDispatcher {
+public:
+    static void dispatch(std::string input, SalesManager& sm) {
+        Vector<std::string> tokens = input::splitInput(input);
+        
+        if (tokens.getSize() == 0) return;
+
+        std::string cmdName = tokens[0];
+        auto& commandMap = CommandRegistry::getCommands();
+
+        if (commandMap.find(cmdName) == commandMap.end()) {
+            std::cout << "Comando desconhecido: " << cmdName << "\n";
+            return;
+        }
+
+        Command* cmd = commandMap[cmdName];
+        tokens.remove(0); // Remove o nome do comando, restam os argumentos
+
+        if (validate(cmd, tokens)) {
+            cmd->execute(sm, tokens);
+        } else {
+            std::cout << "Erro: Argumentos invalidos.\n" << cmd->getHelpMessage() << "\n";
+        }
+    }
+
+private:
+    static bool validate(Command* cmd, Vector<std::string> args) {
+        auto signatures = cmd->getSignatures();
+        if (signatures.isEmpty()) return true; // Se não definiu assinaturas, assume livre
+
+        for (int i = 0; i < signatures.getSize(); i++) {
+            Signature sig = signatures[i];
+            if (sig.getSize() == args.getSize()) {
+                // Implementar lógica de checagem de tipos (int, float, etc) aqui
+                return true; 
+            }
+        }
+        return false;
+    }
+};
 
 #endif

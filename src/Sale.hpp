@@ -8,17 +8,17 @@
 
 struct Sale {
     int id;
-    int price;
+    unsigned long price;
     std::string item;
     std::string buyer;
-    unsigned long date;
+    std::string date;
 
     bool operator==(const Sale& other) const {
         return id == other.id;
     }
 
     std::string toCsv() const {
-        return std::to_string(id) + "," + std::to_string(price) + "," + item + "," + buyer + "," + std::to_string(date);    
+        return std::to_string(id) + "," + std::to_string(price) + "," + item + "," + buyer + "," + date;    
     }
 
     static Sale fromCsv(const std::string& line) {
@@ -37,20 +37,15 @@ struct Sale {
 
         std::getline(ss, s.buyer, ',');
 
-        std::getline(ss, temp);
+        std::getline(ss, s.date);
 
-        // retrocompatibility: if the date is stored as a string, convert it; otherwise, assume it's already an epoch long
-        if (temp.find('/') != std::string::npos) {
-            s.date = date::dateToEpoch(temp);
-        } else
-            s.date = std::stoul(temp);
         return s;
     }
     
     void display() const {
         std::cout << "ID: " << id << " | Buyer: " << buyer
         << " | Item: " << item << " | Date: "
-        << date::epochToDate(date) << " | Price: $" << price::intToPrice(price) << std::endl;
+        << date << " | Price: $" << price::toPrice(price) << std::endl;
     }
 };
 

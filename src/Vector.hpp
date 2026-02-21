@@ -3,6 +3,7 @@
 
 #include <stdexcept>
 #include <iostream>
+#include <initializer_list>
 
 template <typename T>
 class Vector {
@@ -20,6 +21,7 @@ class Vector {
     
     Vector();
     Vector(const Vector<T> &obj);
+    Vector(std::initializer_list<T> list);
     ~Vector();
 
     T pop();
@@ -34,6 +36,7 @@ class Vector {
     void replace(int index, T element);
     Vector<T> map(T (*f)(T));
     Vector<T> filter(bool (*f)(T));
+    bool isEmpty();
 };
 
 const int MIN_VECTOR_CAPACITY = 40;
@@ -84,6 +87,18 @@ inline Vector<T>::Vector(const Vector<T> &other)
     arr = new T[capacity];
     for (int i = 0; i < size; i++)
         arr[i] = other.arr[i];
+}
+
+template <typename T>
+inline Vector<T>::Vector(std::initializer_list<T> list)
+{
+    size = 0;
+    capacity = MIN_VECTOR_CAPACITY;
+    arr = new T[capacity];
+
+    for (const auto& element : list) {
+        push(element);
+    }
 }
 
 template <typename T>
@@ -211,5 +226,8 @@ Vector<T> Vector<T>::filter(bool (*func)(T))
     return result;
 }
 
-
+template <typename T>
+bool Vector<T>::isEmpty() {
+    return size == 0;
+}
 #endif

@@ -1,42 +1,32 @@
 
 #include "Main.hpp"
 
-int main () {
-    auto& commandMap = CommandRegistry::getCommands();
-
-    SalesManager sm = SalesManager();
-
-    bool isRunning = true;
-    Vector<std::string> tokens;
+int main() {
+    SalesManager sm;
     std::string input;
     
+    std::cout << "SalesManager CLI - Digite 'exit' para sair ou 'help' para ajuda e comandos disponíveis.\n";
+
+    bool isRunning = true;
     while (isRunning) {
-        getline(std::cin, input);
-        tokens = input::splitInput(input);
         
-        if (tokens.getSize() == 0)
-            continue; // Guard for empty command lines;
-        
-        if (tokens[0] == "exit") {
+        std::cout << "> ";
+
+        // Sai do loop se o usuario digitar "exit" ou se ocorrer um EOF (Ctrl+D)
+        if (!std::getline(std::cin, input) || input == "exit") {
             isRunning = false;
-            continue; // Exit the loop and end the program
+            // Uso de continue para evitar processamento adicional após o comando de saída ou EOF
+            // e aumentar a legibilidade do código, diminuindo um nível de indentação.
+            continue; 
         }
 
         try {
-            // Checks if command exists and executes it, passing the SalesManager and the arguments
-            if (commandMap.count(tokens[0])) { 
-                auto& command = commandMap[tokens[0]];
-                tokens.remove(0); // Remove the command name from the arguments list
-                command->execute(sm, tokens);
-                // commands[tokens[0]](sm, tokens);
-            }
-            else
-                std::cout << "Unknown command.\n";
-    
+            CommandDispatcher::dispatch(input, sm);
         } catch (const std::exception& e) {
-            std::cerr << "Error executing command: " << e.what() << std::endl;
+            std::cerr << "ocorreu um erro durante execução do comando: " << e.what() << std::endl;
         }
     }
 
+    std::cout << "Encerrando aplicação..." << std::endl;
     return 0;
 }
