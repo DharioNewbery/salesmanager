@@ -26,7 +26,7 @@ Exemplo de uso: search buyer \"Helena Duarte\"";}
         std::string search = toLower(args[0]);
         std::string query = toLower(args[1]);
 
-        if (search != "item" && search != "buyer") {
+        if (!(search == "item" || search == "buyer")) {
             std::cout << "tipo incorreto: '" << search << "'\n";
             return;
         }

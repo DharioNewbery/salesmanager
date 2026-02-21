@@ -65,11 +65,11 @@ bool SortByCommand::sortBy(std::string sort, std::string order)
         std::cout << "sistema tem menos de 2 elementos\n";
         return false;
     }
-    if (order != "up" && order != "down") {
+    if (!(order != "up" || order != "down")) {
         std::cout << "ordem incorreta: '" << order << "'\n";
         return false;
     }
-    if (sort != "price" && sort != "id" && sort != "buyer" && sort != "item" && sort != "date") {
+    if (!(sort == "price" || sort == "id" || sort == "buyer" || sort == "item" || sort == "date")) {
         std::cout << "tipo incorreto: '" << sort << "'\n";
         return false;
     }
@@ -82,7 +82,7 @@ bool SortByCommand::sortBy(std::string sort, std::string order)
 
             bool needTrade = false;
 
-            if (sort == "data") {
+            if (sort == "date") {
                 if (toUp)
                     needTrade = date::isFirstDateGreater(m_sales[i].date, m_sales[j].date);
                 else
