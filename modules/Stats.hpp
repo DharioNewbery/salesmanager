@@ -6,12 +6,12 @@
 class StatsCommand : public Command {
 private:
     void getStats(
-        int& totalDeVendas, 
-        int& valorArrecadado, 
-        int& maiorVenda, 
-        int& menorVenda,
-        Vector<std::string>& produtos,
-        Vector<double>& mediaPorProduto
+        int& allSales, 
+        int& total, 
+        int& biggestSale, 
+        int& minorSale,
+        Vector<std::string>& products,
+        Vector<double>& mediaByProducts
     );
 
     Vector<Sale> m_sales = {};
