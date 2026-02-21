@@ -18,11 +18,36 @@ Exemplo de uso: search buyer \"Helena Duarte\"";}
         };
     }
     
-    void execute(SalesManager& manager, Vector<std::string> args) override
+    void execute(SalesManager& sm, Vector<std::string> args) override
     {
-        std::string search = args[0];
-        std::string item = args[1];
-        manager.searchBy(search, item);
+        Vector<Sale> sales = sm.getSales();
+        Vector<Sale> result = {};
+
+        std::string search = toLower(args[0]);
+        std::string query = toLower(args[1]);
+
+        if (search != "item" && search != "buyer") {
+            std::cout << "tipo incorreto: '" << search << "'\n";
+            return;
+        }
+
+        for (int i = 0; i < sales.getSize(); i++)
+        {
+            bool exists = false;
+
+            if (search == "item")
+                exists = (toLower(sales[i].item).find(query) != std::string::npos);
+
+            else if (search == "buyer")
+                exists = (toLower(sales[i].buyer).find(query) != std::string::npos);
+
+            if (exists)
+            {
+                result.push(sales[i]);
+            }
+        }
+
+        print::printSalesList(result);
     }
 };
 

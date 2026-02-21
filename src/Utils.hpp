@@ -139,6 +139,7 @@ namespace print {
                   << " | Price: R$" << std::fixed << std::setprecision(2) << sale.price / 100.0 
                   << std::endl;
     }
+
     void printSalesList(Vector<Sale> sales, int start = 0, int end = INT_MAX) {
         if (end == INT_MAX) end = sales.getSize();
         const int wIndex = 4;
@@ -148,7 +149,7 @@ namespace print {
         const int wDate = 10;
         const int wPrice = 15;
 
-    std::cout << "\n// ================ Mostrando vendas de " << start << " a " << end << " (total: " << sales.getSize() << ") ================" << std::endl;
+    std::cout << "\n// ================ Mostrando vendas (total: " << sales.getSize() << ") ================" << std::endl;
     
     std::cout << std::right
               << std::setw(wIndex) << ""          << " | "
@@ -163,7 +164,6 @@ namespace print {
 
     for (int i = start; i <= end && i < sales.getSize(); ++i) {
         const auto& s = sales[i];
-        
         std::cout << std::right 
                   << std::setw(wIndex) << i << " | "
                   << std::left
