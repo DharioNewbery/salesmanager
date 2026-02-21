@@ -13,10 +13,10 @@ public:
             return;
     }
 
-    std::string oQueBusca = args[0];
-    std::string parametro = args[1];
+    std::string search = args[0];
+    std::string item = args[1];
 
-        manager.searchBy(oQueBusca, parametro);
+        manager.searchBy(search, item);
     }
 };
 

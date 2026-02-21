@@ -34,10 +34,10 @@ public:
     int  partition(int idStart, int idEnd);
     bool sortByPrice();
 
-    void searchBy(std::string oQueBusca, std::string parametro);
-    bool sortBy(std::string oQueVaiSerOrdenado, std::string ordem = "asc");
+    void searchBy(std::string searchBy, std::string item);
+    bool sortBy(std::string sortBy, std::string ordem = "asc");
 
-    // Aqui a função ela vai reescrever na própria variavel os valores , então n retorna nada. 
+    // A função reescreve na própria variável os valores;
     void getStats(
         int& totalDeVendas, 
         int& valorArrecadado, 
@@ -191,134 +191,139 @@ bool SalesManager::saveSales(std::string filename, bool append)
 }
 
 void SalesManager::getStats(
-    int& totalDeVendas, 
-    int& valorArrecadado, 
-    int& maiorVenda, 
-    int& menorVenda,
-    Vector<std::string>& produtos,
-    Vector<double>& mediaPorProduto
+    int& allSales, 
+    int& total, 
+    int& maijorSales, 
+    int& minorSales,
+    Vector<std::string>& products,
+    Vector<double>& mediaByProducts
 ) {
-    // verifica o total de vendas efetuadas, eu pensei em usar o sales.id mas ai teria que ficar verificando o maior id, e se tiver um id faltando por conta de uma venda removida, ia dar problema. Então é mais seguro usar o getSize na classe inteira mesmo;
-    totalDeVendas = m_sales.getSize();
-    valorArrecadado = 0;
-    // aqui eu tive que criar a variavel de produtos e media, pq quando eu rodava o comando aparentemente ficava os valores anteriores , ai eu precisava resetar esses vetores(se não a média dava errada), mas n conseguir pensar numa forma melhor (fora rodar um vetor vazio toda vez que chamar o comando stats); 
-    produtos = Vector<std::string>();
-    mediaPorProduto = Vector<double>();
-    // aqui só verifica se tem ou n vendas, eu tava colocando output aqui , mas já tirei , pq aqui só fica a lógica interna né? 
-    if (totalDeVendas == 0) {
-        maiorVenda = 0;
-        menorVenda = 0;
+    
+    allSales = m_sales.getSize();
+    total = 0;
+ ; 
+    products = Vector<std::string>();
+    mediaByProducts = Vector<double>();
+    // só verifica se tem ou n vendas; 
+    if (allSales == 0) {
+        maijorSales = 0;
+        minorSales = 0;
         return;
     }
 
-    maiorVenda = m_sales[0].price;
-    menorVenda = m_sales[0].price;
+    maijorSales = m_sales[0].price;
+    minorSales = m_sales[0].price;
 
-    // esses vetores aqui eu vou usar eles pela posição, então basicamente posições iguais = mesma informação;
-    // são vetores acumuladores; -> senão , n tem média ; 
-    Vector<int> somaPorProduto;
-    Vector<int> quantidadePorProduto;
-    // esse loop aqui é o que vai somar o meu valor total;
-    for (int i = 0; i < totalDeVendas; i++) {
+    
+    // são vetores acumuladores; 
+    Vector<int> sumByProduct;
+    Vector<int> quantityPerProduct;
+    // esse loop -> soma o valor total;
+    for (int i = 0; i < allSales; i++) {
 
-        int precoAtual = m_sales[i].price;
-        std::string itemAtual = m_sales[i].item;
+        int currentPrice = m_sales[i].price;
+        std::string currentItem = m_sales[i].item;
 
-        valorArrecadado = valorArrecadado + precoAtual;
+        total = total + currentPrice;
 
-        if (precoAtual > maiorVenda)
-            maiorVenda = precoAtual;
+        if (currentPrice > maijorSales)
+            maijorSales = currentPrice;
 
-        if (precoAtual < menorVenda)
-            menorVenda = precoAtual;
-        // essa variável aqui ela serva pra identificar se algum produto já foi adicionado no vetor de produtos, sem isso aqui ficava adicionando o mesmo produto como se fosse um produto novo; 
-        bool encontrado = false;
-        // aqui caso o produto já tenha sido add anteriormente , ele somana num vetor específico daquele produto ( baseado n posição dele);
-        for (int j = 0; j < produtos.getSize(); j++) {
-            if (produtos[j] == itemAtual) {
-                somaPorProduto[j] = somaPorProduto[j] + precoAtual;
-                quantidadePorProduto[j]++;
-                encontrado = true;
-                // mn aqui eu fiquei em dúvido sobre esse break, pq a professora n gosta né ? 
-                // mas se eu tirar esse break, o loop vai ficar comparando até o final o vetor com o item atual :/;
+        if (currentPrice < minorSales)
+            minorSales = currentPrice;
+        // essa variável ela serva pra identificar se algum produto já foi adicionado no vetor de produtos;
+        bool find = false;
+        // caso o produto já tenha sido add anteriormente , ele somana num vetor específico daquele produto ( baseado n posição dele);
+        for (int j = 0; j < products.getSize(); j++) {
+            if (products[j] == currentItem) {
+                sumByProduct[j] = sumByProduct[j] + currentPrice;
+                quantityPerProduct[j]++;
+                find = true;
                 break;
             }
         }
         // se for a primeira vez em que o produto aparece ele é adicionado no vetor de produtos, ai como vai ter algo no vetor agora , quando rodar dnv o loop , ele vai entrar no for de antes; 
-        if (encontrado == false) {
-            produtos.push(itemAtual);
-            somaPorProduto.push(precoAtual);
-            quantidadePorProduto.push(1);
+        if (find == false) {
+            products.push(currentItem);
+            sumByProduct.push(currentPrice);
+            quantityPerProduct.push(1);
         }
     }
 
-    for (int i = 0; i < produtos.getSize(); i++) {
-        mediaPorProduto.push(
-            (double)somaPorProduto[i] / quantidadePorProduto[i]
+    for (int i = 0; i < products.getSize(); i++) {
+        mediaByProducts.push(
+            (double)sumByProduct[i] / quantityPerProduct[i]
         );
     }
 }
-void SalesManager::searchBy(std::string oQueBusca, std::string parametro)
+void SalesManager::searchBy(std::string searchBy, std::string item)
 {
     for (int i = 0; i < m_sales.getSize(); i++)
     {
-        bool verificador = false;
+        bool checker = false;
 
-        if (oQueBusca == "item")
-            verificador = (m_sales[i].item.find(parametro) != std::string::npos);
+        if (searchBy == "item")
+            checker = (m_sales[i].item.find(item) != std::string::npos);
 
-        else if (oQueBusca == "comprador")
-            verificador = (m_sales[i].buyer.find(parametro) != std::string::npos);
+        else if (searchBy == "comprador")
+            checker = (m_sales[i].buyer.find(item) != std::string::npos);
 
-        if (verificador)
+        if (checker)
         {
             print::printSale(m_sales[i]);
         }
     }
 }
 
-bool SalesManager::sortBy(std::string oQueVaiSerOrdenado, std::string ordem)
+bool SalesManager::sortBy(std::string sortBy, std::string ordem)
 {
     if (m_sales.getSize() <= 1)
         return false;
 
-    bool praCima = (ordem != "desc");
+    bool toUp = (ordem != "desc");
     //loop principal ;
     for (int i = 0; i < m_sales.getSize() - 1; i++) {
         //loop secundário só pra fazer as comparações; 
         for (int j = i + 1; j < m_sales.getSize(); j++) {
 
-            bool precisaTrocar = false;
+            bool needTrade = false;
 
-            if (oQueVaiSerOrdenado == "data") {
-                if (praCima)
-                    precisaTrocar = m_sales[i].date > m_sales[j].date;
+            if (sortBy == "data") {
+                if (toUp)
+                    needTrade = m_sales[i].date > m_sales[j].date;
                 else
-                    precisaTrocar = m_sales[i].date < m_sales[j].date;
+                    needTrade = m_sales[i].date < m_sales[j].date;
             }
 
-            else if (oQueVaiSerOrdenado == "id") {
-                if (praCima)
-                    precisaTrocar = m_sales[i].id > m_sales[j].id;
+            else if (sortBy == "id") {
+                if (toUp)
+                    needTrade = m_sales[i].id > m_sales[j].id;
                 else
-                    precisaTrocar = m_sales[i].id < m_sales[j].id;
+                    needTrade = m_sales[i].id < m_sales[j].id;
             }
 
-            else if (oQueVaiSerOrdenado == "item") {
-                if (praCima)
-                    precisaTrocar = toLower(m_sales[i].item) > toLower(m_sales[j].item);
+            else if (sortBy == "item") {
+                if (toUp)
+                    needTrade = toLower(m_sales[i].item) > toLower(m_sales[j].item);
                 else
-                    precisaTrocar = toLower(m_sales[i].item) < toLower(m_sales[j].item);
+                    needTrade = toLower(m_sales[i].item) < toLower(m_sales[j].item);
             }
 
-            else if (oQueVaiSerOrdenado == "comprador") {
-                if (praCima)
-                    precisaTrocar = toLower(m_sales[i].buyer) > toLower(m_sales[j].buyer);
+            else if (sortBy == "comprador") {
+                if (toUp)
+                    needTrade = toLower(m_sales[i].buyer) > toLower(m_sales[j].buyer);
                 else
-                    precisaTrocar = toLower(m_sales[i].buyer) < toLower(m_sales[j].buyer);
+                    needTrade = toLower(m_sales[i].buyer) < toLower(m_sales[j].buyer);
             }
 
-            if (precisaTrocar) {
+            else if (sortBy == "preço") {
+                if (toUp)
+                    needTrade = m_sales[i].price > m_sales[j].price;
+                else
+                    needTrade = m_sales[i].price < m_sales[j].price;
+            }
+
+            if (needTrade) {
                 Sale aux = m_sales[i];
                 m_sales[i] = m_sales[j];
                 m_sales[j] = aux;
