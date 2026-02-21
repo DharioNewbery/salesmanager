@@ -121,9 +121,9 @@ Exemplo de uso: clear";}
 class RemoveCommand: public Command {
 public:
     std::string getHelpMessage() const override {
-    return "Este comando remove uma venda pelo ID. Ele pode ser usado da seguinte forma:\n\
-1. remove <integer id>: remove a venda com o ID especificado.\n\
-Exemplo de uso: remove 5 (remove a venda com ID 5).";}
+    return "Este comando remove uma venda pela posicao. Ele pode ser usado da seguinte forma:\n\
+1. remove <pos>: remove a venda na posicao especificada.\n\
+Exemplo de uso: remove 5 (remove a venda na posicao 5).";}
 
     Vector<Signature> getSignatures() const override {
         return {
@@ -133,12 +133,8 @@ Exemplo de uso: remove 5 (remove a venda com ID 5).";}
 
     void execute(SalesManager& sm, Vector<std::string> args) override {
     
-        if (args.getSize() != 1) {
-            std::cerr << "Usage: remove <integer id>\n";
-            return;
-        }
         int id = std::stoi(args[0]);
-        sm.removeSaleById(id);
+        sm.removeSaleByIndex(id);
     }
 };
 
