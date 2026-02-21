@@ -316,7 +316,7 @@ bool SalesManager::sortBy(std::string sortBy, std::string ordem)
                     needTrade = toLower(m_sales[i].buyer) < toLower(m_sales[j].buyer);
             }
 
-            else if (sortBy == "preço") {
+            else if (sortBy == "preco") {
                 if (toUp)
                     needTrade = m_sales[i].price > m_sales[j].price;
                 else

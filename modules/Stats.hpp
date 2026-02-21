@@ -5,8 +5,19 @@
 
 class StatsCommand : public Command {
 public:
+
+std::string getHelpMessage() const override {
+    return "Este comando gera um relatório de vendas. Ele pode ser usado da seguinte forma:\n\
+1. stats: mostra dados de vendas, total vendidos por produto, maior e menor venda e a média de vendas.\n\
+Exemplo de uso: stats";}
+
+    Vector<Signature> getSignatures() const override {
+        return {
+            {} // stats
+        };
+    }
+
     void execute(SalesManager& manager, Vector<std::string> args) override {
-    // declaro a variavel aqui fora do getStats, pq como a função getStats ela reescreve os valores, eu preciso que elas existam antes de chamar a função, se n da erro de variavel não declarada;
         int allSales, total, maijorSale, minorSale;
         Vector<std::string> products;
         Vector<double> media;

@@ -10,6 +10,13 @@ public:
 2. help <command>: exibe uma descrição detalhada do comando especificado, incluindo sua sintaxe e exemplos de uso.\n\
 Exemplo de uso: help add (exibe informações detalhadas sobre o comando 'add').";}
 
+    Vector<Signature> getSignatures() const override {
+        return {
+            {}, // help
+            {ArgType::STRING} // help <command>
+        };
+    }
+
     void execute(SalesManager& sm, Vector<std::string> args) override {
         if (args.getSize() == 0) {
             std::cout << "Comandos disponiveis:\n";
