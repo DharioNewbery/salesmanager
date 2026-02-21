@@ -84,9 +84,9 @@ bool SortByCommand::sortBy(std::string sort, std::string order)
 
             if (sort == "data") {
                 if (toUp)
-                    needTrade = m_sales[i].date > m_sales[j].date;
+                    needTrade = date::isFirstDateGreater(m_sales[i].date, m_sales[j].date);
                 else
-                    needTrade = m_sales[i].date < m_sales[j].date;
+                    needTrade = date::isFirstDateGreater(m_sales[j].date, m_sales[i].date);
             }
 
             else if (sort == "id") {

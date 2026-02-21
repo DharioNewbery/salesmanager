@@ -26,6 +26,26 @@ namespace flag {
 }
 
 namespace date {
+
+    bool isFirstDateGreater(const std::string& date1, const std::string& date2) {
+        int d1, m1, y1;
+        int d2, m2, y2;
+
+        // Format " %d/%d/%d" skips the slashes automatically
+        sscanf(date1.c_str(), "%d/%d/%d", &d1, &m1, &y1);
+        sscanf(date2.c_str(), "%d/%d/%d", &d2, &m2, &y2);
+
+        // Compare Years
+        if (y1 > y2) return true;
+        if (y1 < y2) return false;
+
+        // If years are equal, compare Months
+        if (m1 > m2) return true;
+        if (m1 < m2) return false;
+
+        // If months are also equal, compare Days
+        return d1 > d2;
+    }
     bool isFormatValid(const std::string& date) {
         if (date.length() != 10) return false;
         if (date[2] != '/' || date[5] != '/') return false;
