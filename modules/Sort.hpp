@@ -3,19 +3,6 @@
 
 #include "../src/Command.hpp"
 
-//class SortCommand: public Command {
-//public:
-//
-//    void execute(SalesManager& sm, Vector<std::string> args) override {
-//        if (sm.sortByPrice())
-//            std::cout << "Vendas ordenadas por preço com sucesso!\n";
-//        else
-//            std::cout << "Não há vendas para ordenar.\n";
-//    }
-//};
-// A função reescreve na própria variável os valores;
-
-
 class SortByCommand: public Command {
 private:
     Vector<Sale> m_sales = {};
@@ -75,9 +62,9 @@ bool SortByCommand::sortBy(std::string sort, std::string order)
     }
 
     bool toUp = (order == "up");
-    //loop principal ;
+    //loop principal
     for (int i = 0; i < m_sales.getSize() - 1; i++) {
-        //loop secundário só pra fazer as comparações; 
+        //loop secundário so pra fazer as comparações
         for (int j = i + 1; j < m_sales.getSize(); j++) {
 
             bool needTrade = false;

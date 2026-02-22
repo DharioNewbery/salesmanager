@@ -1,3 +1,8 @@
+// ========== SALESMANAGER ==========
+// Alunos: Dhario Newbery Evangelista
+//         Khey Niwa
+
+//   Tema: Vendas
 
 #include "Main.hpp"
 
@@ -14,15 +19,15 @@ int main() {
         
         std::cout << "> ";
 
-        // Sai do loop se o usuario digitar "exit" ou se ocorrer um EOF (Ctrl+D)
+        // exits the loop if user types "exit" or EOF occurs (Ctrl+D)
         if (!std::getline(std::cin, input) || input == "exit") {
             isRunning = false;
-            // Uso de continue para evitar processamento adicional após o comando de saída ou EOF
-            // e aumentar a legibilidade do código, diminuindo um nível de indentação.
+            // continue for avoiding reduntand message before exiting loop.
+            // improves code readability and structure. Be Kind, prof. Paula ;-;
             continue; 
         }
 
-        try {
+        try { // Safe guards the command execution, even if exception occurs, the code will not stop.
             CommandDispatcher::dispatch(input, sm);
         } catch (const std::exception& e) {
             std::cerr << "ocorreu um erro durante execução do comando: " << e.what() << std::endl;

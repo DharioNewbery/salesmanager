@@ -21,9 +21,9 @@ using Signature = Vector<ArgType>;
 
 class Command {
 public:
+    // default functions that must be overrited. If not, default behaviour will happen.
     virtual std::string getHelpMessage() const { return "Nenhuma mensagem de ajuda disponivel para este comando"; }
     virtual Vector<Signature> getSignatures() const { return {}; }
-
     virtual void execute(SalesManager& sm, Vector<std::string> args) = 0;
 
     virtual ~Command() = default;
@@ -32,7 +32,7 @@ public:
 class CommandRegistry {
 public:
     static std::unordered_map<std::string, Command*>& getCommands() {
-        static std::unordered_map<std::string, Command*> commands;
+        static std::unordered_map<std::string, Command*> commands; // store all commands keys and objects;
         return commands;
     }
 
@@ -45,7 +45,7 @@ public:
 
 struct CommandRegistrator {
     CommandRegistrator(std::string name, Command* cmd) {
-        CommandRegistry::getCommands()[name] = cmd;
+        CommandRegistry::getCommands()[name] = cmd; // map the command into the the commands list
     }
     
     ~CommandRegistrator() = default;
@@ -56,21 +56,21 @@ public:
     static void dispatch(std::string input, SalesManager& sm) {
         Vector<std::string> tokens = input::splitInput(input);
         
-        if (tokens.getSize() == 0) return;
+        if (tokens.getSize() == 0) return; // empty input
 
         std::string cmdName = tokens[0];
-        auto& commandMap = CommandRegistry::getCommands();
+        auto& commandMap = CommandRegistry::getCommands(); // get commands
 
-        if (commandMap.find(cmdName) == commandMap.end()) {
+        if (commandMap.find(cmdName) == commandMap.end()) {  // checks if command exist in commands
             std::cout << "Comando desconhecido: " << cmdName << "\n";
             return;
         }
 
-        Command* cmd = commandMap[cmdName];
-        tokens.remove(0); // Remove o nome do comando, restam os argumentos
+        Command* cmd = commandMap[cmdName]; // get the specified command
+        tokens.remove(0); // Remove the command name before passing the arguments
 
         if (validate(cmd, tokens)) {
-            cmd->execute(sm, tokens);
+            cmd->execute(sm, tokens); // execute if valid arg to signature relation
         } else {
             std::cout << "Erro: Argumentos invalidos.\n" << cmd->getHelpMessage() << "\n";
         }
@@ -103,7 +103,7 @@ private:
     }
     static bool validate(Command* cmd, Vector<std::string> args) {
         auto signatures = cmd->getSignatures();
-        if (signatures.isEmpty()) return true; // Se não definiu assinaturas, assume livre
+        if (signatures.isEmpty()) return true; // If no signatures are defined, assume free form.
         
         for (int i = 0; i < signatures.getSize(); i++) {
             Signature sig = signatures[i];
@@ -111,11 +111,11 @@ private:
          
             if (sig.getSize() == args.getSize()) {
                 
-                if (sigSize == 0) return true; // Assinaturas vazias.
+                if (sigSize == 0) return true; // deals with empty signature.
 
 
                 for (int j = 0; j < sigSize; j++) {
-                    if (!tryConvert(args[j], sig[j])) return false;
+                    if (!tryConvert(args[j], sig[j])) return false; // if any arg doesn't match, it's invalid.
                 }
                 return true;
             }
