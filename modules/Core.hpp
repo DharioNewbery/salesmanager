@@ -118,6 +118,26 @@ Exemplo de uso: clear";}
     }
 };
 
+class FlushCommand: public Command {
+public:
+    std::string getHelpMessage() const override {
+    return "Este comando limpa todos os dados do programa. Ele pode ser usado da seguinte forma:\n\
+1. flush: limpa todos os dados.\n\n\
+Exemplo de uso: flush";}
+    
+    Vector<Signature> getSignatures() const override {
+        return {
+            {} // clear
+        };
+    }
+
+    void execute(SalesManager& sm, Vector<std::string> args) override {
+        sm.setSales({});
+        std::cout << "Dados do programa excluídos.\n";
+    }
+};
+
+
 class RemoveCommand: public Command {
 public:
     std::string getHelpMessage() const override {
@@ -215,5 +235,6 @@ CommandRegistrator registerSaveCommand("save", new SaveSalesCommand());
 CommandRegistrator registerClearCommand("clear", new ClearCommand());
 CommandRegistrator registerRemoveCommand("remove", new RemoveCommand());
 CommandRegistrator registerAddSaleCommand("add", new AddSaleCommand());
+CommandRegistrator registerFlushCommand("flush", new FlushCommand());
 
 #endif
