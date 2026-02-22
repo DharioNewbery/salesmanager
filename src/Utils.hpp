@@ -169,7 +169,7 @@ namespace print {
         const int wDate = 10;
         const int wPrice = 15;
 
-    std::cout << "\n// ================ Mostrando vendas (total: " << sales.getSize() << ") ================" << std::endl;
+    std::cout << "\n// ================ Mostrando vendas de " << start << " ate " << end << " (total: " << sales.getSize() << ") ================" << std::endl;
     
     std::cout << std::right
               << std::setw(wIndex) << ""          << " | "
