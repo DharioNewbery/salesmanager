@@ -26,7 +26,7 @@ public:
     int getSalesAmmount();
     bool addSale(Sale sale);
     bool removeSaleById(const int id);
-    bool removeSaleByIndex (const int id);
+    void removeSaleByIndex (const int id);
     bool updateSale(Sale sale);
     bool loadSales(std::string filename, bool append = false);
     bool saveSales(std::string filename, bool override = false);
@@ -60,7 +60,7 @@ bool SalesManager::addSale(Sale sale) {
     return true;
 }
 
-bool SalesManager::removeSaleByIndex (const int id) {
+void SalesManager::removeSaleByIndex (const int id) {
     m_sales.remove(id);
 }
 
