@@ -62,7 +62,7 @@ Exemplo de uso: load vendas.txt -a";}
 
 
         sm.loadSales(filename, append);
-        std::cout << "Arquivo '" <<  filename << "carregado com sucesso!\n";
+        std::cout << "Arquivo '" <<  filename << "' carregado com sucesso!\n";
     }
 };
 
@@ -182,8 +182,8 @@ public:
 A data deve estar no formato dd/MM/yyyy e o preço deve ser um número em reais separando centavos por ',' ou '.' (10 ou 20,50).\n\
 use aspas duplas ("") para nomes e produtos que contêm espaços.\n\
 2. add: inicia uma rotina interativa que solicita os detalhes da venda um por um.\n\
-Exemplo de uso: add \"Dhario Newbery\" \"Garrafa d'água\" 01/01/2026 2,50\n\
-(adiciona uma venda para Dhario Newbery comprando uma garrafa d'água por R$2,50 no dia 01/01/2026).";}
+Exemplo de uso: add \"Dhario Newbery\" \"Garrafa d'agua\" 01/01/2026 2,50\n\
+(adiciona uma venda para Dhario Newbery comprando uma garrafa d'agua por R$2,50 no dia 01/01/2026).";}
 
     Vector<Signature> getSignatures() const override {
         return {
